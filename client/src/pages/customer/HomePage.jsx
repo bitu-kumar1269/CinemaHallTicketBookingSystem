@@ -48,9 +48,12 @@ export default function HomePage() {
   ];
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-      {/* 1. Big Movie Poster Carousel - Rotates Every 5 Seconds with ONLY ONE "Book now" button */}
+    <div>
+      {/* 1. Big Movie Poster Carousel - Full Width, No Container Wrapper */}
       <HeroBanner movies={featuredList} />
+
+      {/* Rest of page content inside max-width container */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
 
       {/* 2. All Movies Section Heading matching screenshot */}
       <div className="mb-6">
@@ -189,6 +192,7 @@ export default function HomePage() {
           </div>
         </div>
       )}
+      </div> {/* end max-w-7xl container */}
     </div>
   );
 }
