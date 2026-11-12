@@ -127,7 +127,7 @@ export default function ManageMovies() {
           <span className="text-[10px] font-bold uppercase tracking-wider text-red-500">
             Catalog Management
           </span>
-          <h1 className="text-2xl font-black text-white mt-0.5">Manage Movies</h1>
+          <h1 className="text-2xl font-black text-slate-900 mt-0.5">Manage Movies</h1>
           <p className="text-xs text-slate-400">
             Add theatrical titles, update movie posters, synopses, and trailer links.
           </p>
@@ -171,7 +171,7 @@ export default function ManageMovies() {
                           className="w-10 h-14 rounded-lg object-cover border border-slate-200 shrink-0"
                         />
                         <div>
-                          <h4 className="font-bold text-white text-sm">{m.title}</h4>
+                          <h4 className="font-bold text-slate-900 text-sm">{m.title}</h4>
                           <span className="text-[10px] text-slate-400">Director: {m.director}</span>
                         </div>
                       </div>
@@ -207,7 +207,7 @@ export default function ManageMovies() {
                       <div className="flex items-center justify-end gap-2">
                         <button
                           onClick={() => handleOpenEdit(m)}
-                          className="p-1.5 rounded-lg bg-slate-100 hover:bg-[#243047] text-slate-600 hover:text-slate-900"
+                          className="p-1.5 rounded-lg bg-slate-100 hover:bg-slate-100 text-slate-600 hover:text-slate-900"
                           title="Edit"
                         >
                           <Edit2 className="w-3.5 h-3.5" />
@@ -251,7 +251,7 @@ export default function ManageMovies() {
                 value={formData.title}
                 onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                 required
-                className="w-full bg-slate-100 border border-slate-200 rounded-xl px-3 py-2 text-xs text-white"
+                className="w-full bg-slate-100 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-900"
               />
             </div>
             <div>
@@ -263,7 +263,7 @@ export default function ManageMovies() {
                 value={formData.director}
                 onChange={(e) => setFormData({ ...formData, director: e.target.value })}
                 required
-                className="w-full bg-slate-100 border border-slate-200 rounded-xl px-3 py-2 text-xs text-white"
+                className="w-full bg-slate-100 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-900"
               />
             </div>
           </div>
@@ -277,7 +277,7 @@ export default function ManageMovies() {
               value={formData.description}
               onChange={(e) => setFormData({ ...formData, description: e.target.value })}
               required
-              className="w-full bg-slate-100 border border-slate-200 rounded-xl px-3 py-2 text-xs text-white"
+              className="w-full bg-slate-100 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-900"
             />
           </div>
 
@@ -291,7 +291,7 @@ export default function ManageMovies() {
                 value={formData.genre}
                 onChange={(e) => setFormData({ ...formData, genre: e.target.value })}
                 required
-                className="w-full bg-slate-100 border border-slate-200 rounded-xl px-3 py-2 text-xs text-white"
+                className="w-full bg-slate-100 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-900"
               />
             </div>
             <div>
@@ -303,7 +303,7 @@ export default function ManageMovies() {
                 value={formData.language}
                 onChange={(e) => setFormData({ ...formData, language: e.target.value })}
                 required
-                className="w-full bg-slate-100 border border-slate-200 rounded-xl px-3 py-2 text-xs text-white"
+                className="w-full bg-slate-100 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-900"
               />
             </div>
             <div>
@@ -315,7 +315,7 @@ export default function ManageMovies() {
                 value={formData.durationMins}
                 onChange={(e) => setFormData({ ...formData, durationMins: parseInt(e.target.value, 10) })}
                 required
-                className="w-full bg-slate-100 border border-slate-200 rounded-xl px-3 py-2 text-xs text-white"
+                className="w-full bg-slate-100 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-900"
               />
             </div>
           </div>
@@ -330,7 +330,7 @@ export default function ManageMovies() {
                 value={formData.posterUrl}
                 onChange={(e) => setFormData({ ...formData, posterUrl: e.target.value })}
                 required
-                className="w-full bg-slate-100 border border-slate-200 rounded-xl px-3 py-2 text-xs text-white"
+                className="w-full bg-slate-100 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-900"
               />
             </div>
             <div>
@@ -342,7 +342,7 @@ export default function ManageMovies() {
                 value={formData.trailerUrl}
                 onChange={(e) => setFormData({ ...formData, trailerUrl: e.target.value })}
                 required
-                className="w-full bg-slate-100 border border-slate-200 rounded-xl px-3 py-2 text-xs text-white"
+                className="w-full bg-slate-100 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-900"
               />
             </div>
           </div>
@@ -355,7 +355,7 @@ export default function ManageMovies() {
               <select
                 value={formData.status}
                 onChange={(e) => setFormData({ ...formData, status: e.target.value })}
-                className="w-full bg-slate-100 border border-slate-200 rounded-xl px-3 py-2 text-xs text-white"
+                className="w-full bg-slate-100 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-900"
               >
                 <option value="NOW_SHOWING">NOW SHOWING</option>
                 <option value="COMING_SOON">COMING SOON</option>
@@ -368,7 +368,7 @@ export default function ManageMovies() {
               <select
                 value={formData.certification}
                 onChange={(e) => setFormData({ ...formData, certification: e.target.value })}
-                className="w-full bg-slate-100 border border-slate-200 rounded-xl px-3 py-2 text-xs text-white"
+                className="w-full bg-slate-100 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-900"
               >
                 <option value="U">U (Universal)</option>
                 <option value="UA">UA (Parental Guidance)</option>

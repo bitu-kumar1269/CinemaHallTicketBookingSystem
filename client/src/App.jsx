@@ -26,7 +26,7 @@ import VerifyTicket from './pages/admin/VerifyTicket';
 
 export default function App() {
   return (
-    <div className="flex flex-col min-h-screen bg-[#0B0F17] text-slate-100 font-sans">
+    <div className="flex flex-col min-h-screen bg-white text-slate-700 font-sans">
       <Navbar />
       <div className="flex-1">
         <Routes>
@@ -86,7 +86,7 @@ export default function App() {
             path="*"
             element={
               <div className="max-w-md mx-auto py-24 text-center">
-                <h1 className="text-4xl font-black text-white">404</h1>
+                <h1 className="text-4xl font-black text-slate-900">404</h1>
                 <p className="text-sm text-slate-400 mt-2">The requested cinema page was not found.</p>
                 <a href="/" className="mt-4 inline-block text-xs font-bold text-red-500 hover:underline">
                   Return to Home

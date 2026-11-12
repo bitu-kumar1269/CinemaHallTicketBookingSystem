@@ -4,8 +4,8 @@ import { Clock } from 'lucide-react';
 export default function SeatGrid({ rows = [], selectedSeats = [], onToggleSeat, onProceedToCheckout, showDetails, lockTimer }) {
   const getSeatColorClass = (seat) => {
     const isSelected = selectedSeats.some((s) => s.seatId === seat.seatId);
-    if (isSelected) return 'bg-cyan-500 text-white border-cyan-400 shadow font-bold scale-110 z-10';
-    if (seat.status === 'BOOKED') return 'bg-slate-100 text-slate-300 border-slate-200 cursor-not-allowed opacity-60';
+    if (isSelected) return 'bg-red-600 text-white border-red-500 shadow-md font-bold scale-110 z-10';
+    if (seat.status === 'BOOKED') return 'bg-slate-100 text-slate-500 border-slate-200 cursor-not-allowed opacity-60';
     if (seat.status === 'LOCKED') {
       if (seat.isLockedByMe) return 'bg-amber-400 text-black border-amber-300 animate-pulse font-bold';
       return 'bg-amber-100 text-amber-600 border-amber-200 cursor-not-allowed';
@@ -63,7 +63,7 @@ export default function SeatGrid({ rows = [], selectedSeats = [], onToggleSeat, 
       {/* Legend */}
       <div className="w-full mt-6 py-4 px-6 rounded-2xl bg-white border border-slate-200 shadow-sm flex flex-wrap items-center justify-center gap-6 text-xs text-slate-600">
         <div className="flex items-center gap-2"><div className="w-4 h-4 rounded border border-slate-200 bg-slate-50" /><span>Available</span></div>
-        <div className="flex items-center gap-2"><div className="w-4 h-4 rounded bg-cyan-500 border border-cyan-400" /><span>Selected</span></div>
+        <div className="flex items-center gap-2"><div className="w-4 h-4 rounded bg-red-600 border border-red-500" /><span>Selected</span></div>
         <div className="flex items-center gap-2"><div className="w-4 h-4 rounded bg-amber-100 border border-amber-300" /><span>Temporarily Held</span></div>
         <div className="flex items-center gap-2"><div className="w-4 h-4 rounded bg-slate-100 border border-slate-200 opacity-60" /><span>Booked</span></div>
         <div className="h-4 w-px bg-slate-200 hidden sm:block" />
@@ -82,7 +82,7 @@ export default function SeatGrid({ rows = [], selectedSeats = [], onToggleSeat, 
               <p className="text-[11px] text-slate-500 uppercase tracking-wider font-semibold">Selected Seats ({selectedSeats.length})</p>
               <div className="flex flex-wrap items-center gap-1.5 mt-1">
                 {selectedSeats.map((s) => (
-                  <span key={s.seatId} className="px-2 py-0.5 rounded bg-cyan-50 text-cyan-700 border border-cyan-200 font-bold text-xs">
+                  <span key={s.seatId} className="px-2 py-0.5 rounded bg-red-50 text-red-700 border border-red-200 font-bold text-xs">
                     {s.row}{s.number}
                   </span>
                 ))}

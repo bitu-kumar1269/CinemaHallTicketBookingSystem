@@ -80,7 +80,7 @@ export default function MyBookingsPage() {
 
       {bookings.length === 0 ? (
         <div className="py-20 text-center bg-white border border-slate-200 rounded-3xl p-10 shadow-sm">
-          <Film className="w-12 h-12 text-slate-300 mx-auto mb-3" />
+          <Film className="w-12 h-12 text-slate-500 mx-auto mb-3" />
           <h3 className="text-base font-bold text-slate-800">No bookings found</h3>
           <p className="text-xs text-slate-500 mt-1 max-w-sm mx-auto mb-6">
             You haven't reserved any tickets yet. Explore current theatrical blockbusters!
@@ -140,7 +140,7 @@ export default function MyBookingsPage() {
                   {isConfirmed && (
                     <div className="flex items-center gap-2">
                       <button onClick={() => handleDownloadPDF(booking.id, booking.bookingNumber)}
-                        className="px-3 py-2 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs flex items-center gap-1.5 shadow transition-all">
+                        className="px-3 py-2 rounded-xl bg-slate-900 hover:bg-black text-white font-bold text-xs flex items-center gap-1.5 shadow transition-all">
                         <Download className="w-3.5 h-3.5" />Ticket PDF
                       </button>
                       <button onClick={() => handleCancelBooking(booking.id)}

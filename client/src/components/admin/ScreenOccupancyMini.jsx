@@ -25,7 +25,7 @@ export default function ScreenOccupancyMini({ data }) {
             <span className="text-[10px] uppercase font-bold text-slate-400 tracking-wider">
               Live Hall Visualizer
             </span>
-            <h3 className="text-sm font-bold text-white mt-0.5">{screenName}</h3>
+            <h3 className="text-sm font-bold text-slate-900 mt-0.5">{screenName}</h3>
           </div>
           <span className="px-2.5 py-1 rounded-full text-[11px] font-bold bg-amber-500/20 text-amber-400 border border-amber-500/30">
             {summary.occupancyRate}% Full

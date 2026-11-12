@@ -58,7 +58,7 @@ export default function VerifyTicket() {
         <span className="text-[10px] font-bold uppercase tracking-wider text-red-500">
           Turnstile Admission Gate
         </span>
-        <h1 className="text-2xl font-black text-white flex items-center gap-2 mt-0.5">
+        <h1 className="text-2xl font-black text-slate-900 flex items-center gap-2 mt-0.5">
           <QrCode className="w-7 h-7 text-red-600" />
           QR Code Ticket Verification
         </h1>
@@ -104,7 +104,7 @@ export default function VerifyTicket() {
 
         {/* Verification Success Card */}
         {result && (
-          <div className="p-6 rounded-2xl bg-green-950/40 border-2 border-green-500 text-white space-y-4 animate-scaleUp">
+          <div className="p-6 rounded-2xl bg-green-950/40 border-2 border-green-500 text-slate-900 space-y-4 animate-scaleUp">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-full bg-green-500/20 text-green-600 flex items-center justify-center shrink-0">
                 <CheckCircle2 className="w-6 h-6" />
@@ -122,15 +122,15 @@ export default function VerifyTicket() {
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-3 border-t border-green-800/40 text-xs">
               <div>
                 <span className="text-slate-400 text-[10px] block uppercase font-bold">Ticket Code</span>
-                <span className="font-mono font-bold text-white">{result.ticketCode}</span>
+                <span className="font-mono font-bold text-slate-900">{result.ticketCode}</span>
               </div>
               <div>
                 <span className="text-slate-400 text-[10px] block uppercase font-bold">Customer</span>
-                <span className="font-bold text-white">{result.customerName}</span>
+                <span className="font-bold text-slate-900">{result.customerName}</span>
               </div>
               <div>
                 <span className="text-slate-400 text-[10px] block uppercase font-bold">Movie</span>
-                <span className="font-bold text-white">{result.movie}</span>
+                <span className="font-bold text-slate-900">{result.movie}</span>
               </div>
               <div>
                 <span className="text-slate-400 text-[10px] block uppercase font-bold">Cinema & Screen</span>
@@ -152,7 +152,7 @@ export default function VerifyTicket() {
 
         {/* Verification Failure Card */}
         {errorMsg && (
-          <div className="p-5 rounded-2xl bg-red-950/60 border-2 border-red-600 text-white flex items-start gap-3">
+          <div className="p-5 rounded-2xl bg-red-950/60 border-2 border-red-600 text-slate-900 flex items-start gap-3">
             <XCircle className="w-6 h-6 text-red-500 shrink-0 mt-0.5" />
             <div>
               <h3 className="text-sm font-bold text-red-600 uppercase tracking-wider">

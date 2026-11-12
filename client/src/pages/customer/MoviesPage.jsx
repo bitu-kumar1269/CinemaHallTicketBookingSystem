@@ -136,7 +136,7 @@ export default function MoviesPage() {
         </div>
       ) : movies.length === 0 ? (
         <div className="py-20 text-center bg-white border border-slate-200 rounded-2xl p-10 shadow-sm">
-          <Film className="w-12 h-12 text-slate-300 mx-auto mb-3" />
+          <Film className="w-12 h-12 text-slate-500 mx-auto mb-3" />
           <h3 className="text-base font-bold text-slate-800">No movies match your criteria</h3>
           <p className="text-xs text-slate-500 mt-1 max-w-sm mx-auto">
             Try adjusting your search terms, removing genre filters, or browsing other available dates.

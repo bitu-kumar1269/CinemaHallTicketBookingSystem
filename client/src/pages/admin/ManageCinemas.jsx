@@ -72,7 +72,7 @@ export default function ManageCinemas() {
           <span className="text-[10px] font-bold uppercase tracking-wider text-red-500">
             Locations & Screens
           </span>
-          <h1 className="text-2xl font-black text-white mt-0.5">Cinema Theatres & Screens</h1>
+          <h1 className="text-2xl font-black text-slate-900 mt-0.5">Cinema Theatres & Screens</h1>
           <p className="text-xs text-slate-400">
             Configure multiplex complexes, screen projection formats, and seat layouts.
           </p>
@@ -111,7 +111,7 @@ export default function ManageCinemas() {
                   </span>
                 </div>
 
-                <h3 className="text-base font-bold text-white">{cinema.name}</h3>
+                <h3 className="text-base font-bold text-slate-900">{cinema.name}</h3>
 
                 <p className="text-xs text-slate-400 flex items-start gap-1.5 leading-relaxed">
                   <MapPin className="w-3.5 h-3.5 text-red-500 shrink-0 mt-0.5" />
@@ -149,7 +149,7 @@ export default function ManageCinemas() {
                   setScreenForm({ screenNumber: `Screen ${cinema.screens.length + 1}`, soundSystem: 'Dolby Atmos 7.1' });
                   setScreenModalOpen(true);
                 }}
-                className="w-full py-2 rounded-xl bg-slate-100 hover:bg-[#243047] text-slate-600 hover:text-slate-900 border border-slate-200 text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors"
+                className="w-full py-2 rounded-xl bg-slate-100 hover:bg-slate-100 text-slate-600 hover:text-slate-900 border border-slate-200 text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors"
               >
                 <Plus className="w-3.5 h-3.5" />
                 Add Screen to this Cinema
@@ -176,7 +176,7 @@ export default function ManageCinemas() {
               value={cinemaForm.name}
               onChange={(e) => setCinemaForm({ ...cinemaForm, name: e.target.value })}
               required
-              className="w-full bg-slate-100 border border-slate-200 rounded-xl px-3 py-2 text-xs text-white"
+              className="w-full bg-slate-100 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-900"
             />
           </div>
 
@@ -189,7 +189,7 @@ export default function ManageCinemas() {
                 value={cinemaForm.city}
                 onChange={(e) => setCinemaForm({ ...cinemaForm, city: e.target.value })}
                 required
-                className="w-full bg-slate-100 border border-slate-200 rounded-xl px-3 py-2 text-xs text-white"
+                className="w-full bg-slate-100 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-900"
               />
             </div>
             <div>
@@ -200,7 +200,7 @@ export default function ManageCinemas() {
                 value={cinemaForm.state}
                 onChange={(e) => setCinemaForm({ ...cinemaForm, state: e.target.value })}
                 required
-                className="w-full bg-slate-100 border border-slate-200 rounded-xl px-3 py-2 text-xs text-white"
+                className="w-full bg-slate-100 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-900"
               />
             </div>
           </div>
@@ -213,7 +213,7 @@ export default function ManageCinemas() {
               value={cinemaForm.address}
               onChange={(e) => setCinemaForm({ ...cinemaForm, address: e.target.value })}
               required
-              className="w-full bg-slate-100 border border-slate-200 rounded-xl px-3 py-2 text-xs text-white"
+              className="w-full bg-slate-100 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-900"
             />
           </div>
 
@@ -225,7 +225,7 @@ export default function ManageCinemas() {
               value={cinemaForm.pinCode}
               onChange={(e) => setCinemaForm({ ...cinemaForm, pinCode: e.target.value })}
               required
-              className="w-full bg-slate-100 border border-slate-200 rounded-xl px-3 py-2 text-xs text-white"
+              className="w-full bg-slate-100 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-900"
             />
           </div>
 
@@ -264,7 +264,7 @@ export default function ManageCinemas() {
               value={screenForm.screenNumber}
               onChange={(e) => setScreenForm({ ...screenForm, screenNumber: e.target.value })}
               required
-              className="w-full bg-slate-100 border border-slate-200 rounded-xl px-3 py-2 text-xs text-white"
+              className="w-full bg-slate-100 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-900"
             />
           </div>
 
@@ -275,7 +275,7 @@ export default function ManageCinemas() {
             <select
               value={screenForm.soundSystem}
               onChange={(e) => setScreenForm({ ...screenForm, soundSystem: e.target.value })}
-              className="w-full bg-slate-100 border border-slate-200 rounded-xl px-3 py-2 text-xs text-white"
+              className="w-full bg-slate-100 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-900"
             >
               <option value="Dolby Atmos 7.1.4">Dolby Atmos 7.1.4</option>
               <option value="IMAX 12-Channel Laser">IMAX 12-Channel Laser</option>
@@ -285,7 +285,7 @@ export default function ManageCinemas() {
           </div>
 
           <div className="p-3.5 rounded-xl bg-slate-100 border border-slate-200 text-xs text-slate-600">
-            <span className="font-bold text-white block mb-1">Automated Seat Layout</span>
+            <span className="font-bold text-slate-900 block mb-1">Automated Seat Layout</span>
             <span>
               Generates 64 seats (Rows A-B: Recliner luxury tiers, Rows C-E: Premium mid-tiers, Rows F-H: Regular tiers).
             </span>

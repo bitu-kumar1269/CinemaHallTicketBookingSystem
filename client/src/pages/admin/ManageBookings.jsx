@@ -31,7 +31,7 @@ export default function ManageBookings() {
           <span className="text-[10px] font-bold uppercase tracking-wider text-red-500">
             Transactions & Reservations
           </span>
-          <h1 className="text-2xl font-black text-white mt-0.5">Customer Bookings</h1>
+          <h1 className="text-2xl font-black text-slate-900 mt-0.5">Customer Bookings</h1>
           <p className="text-xs text-slate-400">
             Real-time ledger of all ticket bookings, payment statuses, and allocated seats.
           </p>
@@ -73,7 +73,7 @@ export default function ManageBookings() {
       ) : bookings.length === 0 ? (
         <div className="bg-white border border-slate-200 rounded-2xl p-12 text-center text-slate-400">
           <Ticket className="w-10 h-10 text-slate-600 mx-auto mb-2" />
-          <p className="text-sm font-semibold text-white">No bookings found</p>
+          <p className="text-sm font-semibold text-slate-900">No bookings found</p>
         </div>
       ) : (
         <div className="bg-white border border-slate-200 rounded-2xl overflow-hidden">
@@ -93,7 +93,7 @@ export default function ManageBookings() {
               <tbody className="divide-y divide-slate-100">
                 {bookings.map((b) => (
                   <tr key={b.id} className="hover:bg-slate-100/50 transition-colors">
-                    <td className="py-3.5 px-4 font-mono font-bold text-white">
+                    <td className="py-3.5 px-4 font-mono font-bold text-slate-900">
                       {b.bookingNumber}
                     </td>
                     <td className="py-3.5 px-4">
@@ -101,7 +101,7 @@ export default function ManageBookings() {
                       <span className="text-[10px] text-slate-500">{b.user.email}</span>
                     </td>
                     <td className="py-3.5 px-4">
-                      <div className="font-bold text-white">{b.show.movie.title}</div>
+                      <div className="font-bold text-slate-900">{b.show.movie.title}</div>
                       <span className="text-[10px] text-slate-400">
                         {b.show.screen.cinemaHall.name} ({b.show.screen.screenNumber})
                       </span>

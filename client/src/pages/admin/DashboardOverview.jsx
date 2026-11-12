@@ -94,7 +94,7 @@ export default function DashboardOverview() {
           <span className="text-[10px] font-bold uppercase tracking-wider text-red-500">
             Real-Time Analytics
           </span>
-          <h1 className="text-2xl font-black text-white mt-0.5">Dashboard Overview</h1>
+          <h1 className="text-2xl font-black text-slate-900 mt-0.5">Dashboard Overview</h1>
         </div>
         <div className="flex items-center gap-2 text-xs text-slate-400 bg-white px-3.5 py-1.5 rounded-xl border border-slate-200">
           <Calendar className="w-4 h-4 text-red-500" />
@@ -115,7 +115,7 @@ export default function DashboardOverview() {
                 <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 block">
                   {card.title}
                 </span>
-                <span className="text-2xl font-black text-white mt-1 block">
+                <span className="text-2xl font-black text-slate-900 mt-1 block">
                   {card.value}
                 </span>
                 <span className="text-[10px] text-slate-400 mt-0.5 block">{card.subtitle}</span>
@@ -137,7 +137,7 @@ export default function DashboardOverview() {
               <span className="text-[10px] uppercase font-bold text-slate-400 tracking-wider">
                 Sales Trajectory
               </span>
-              <h3 className="text-sm font-bold text-white mt-0.5">Past 7 Days Revenue</h3>
+              <h3 className="text-sm font-bold text-slate-900 mt-0.5">Past 7 Days Revenue</h3>
             </div>
             <span className="flex items-center gap-1 text-xs text-green-600 font-bold">
               <TrendingUp className="w-3.5 h-3.5" /> High Demand
@@ -166,7 +166,7 @@ export default function DashboardOverview() {
 
           <div className="mt-4 flex items-center justify-between text-xs text-slate-400">
             <span>Aggregated confirmed ticket & snack revenue</span>
-            <span className="text-white font-bold">₹{metrics?.totalRevenue || 0} Lifetime</span>
+            <span className="text-slate-900 font-bold">₹{metrics?.totalRevenue || 0} Lifetime</span>
           </div>
         </div>
 
@@ -179,7 +179,7 @@ export default function DashboardOverview() {
       {/* Recent Bookings Table */}
       <div className="bg-white border border-slate-200 rounded-2xl p-6">
         <div className="flex items-center justify-between mb-4">
-          <h3 className="text-sm font-bold text-white uppercase tracking-wider">
+          <h3 className="text-sm font-bold text-slate-900 uppercase tracking-wider">
             Recent System Bookings
           </h3>
           <span className="text-xs text-slate-400">Showing last 5 reservations</span>
@@ -200,7 +200,7 @@ export default function DashboardOverview() {
             <tbody className="divide-y divide-slate-100">
               {recentBookings.map((b) => (
                 <tr key={b.id} className="hover:bg-slate-100/50 transition-colors">
-                  <td className="py-3 font-mono font-bold text-white">{b.bookingNumber}</td>
+                  <td className="py-3 font-mono font-bold text-slate-900">{b.bookingNumber}</td>
                   <td className="py-3 text-slate-600">{b.user.fullName}</td>
                   <td className="py-3 text-slate-700 font-semibold">{b.show.movie.title}</td>
                   <td className="py-3 font-mono text-cyan-600">

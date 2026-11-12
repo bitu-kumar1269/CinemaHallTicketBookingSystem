@@ -88,7 +88,7 @@ export default function ManageShows() {
           <span className="text-[10px] font-bold uppercase tracking-wider text-red-500">
             Scheduling & Showtimes
           </span>
-          <h1 className="text-2xl font-black text-white mt-0.5">Show Schedules</h1>
+          <h1 className="text-2xl font-black text-slate-900 mt-0.5">Show Schedules</h1>
           <p className="text-xs text-slate-400">
             Schedule theatrical slots and initialize seat pricing tiers across screens.
           </p>
@@ -142,7 +142,7 @@ export default function ManageShows() {
                             className="w-10 h-14 rounded-lg object-cover border border-slate-200 shrink-0"
                           />
                           <div>
-                            <h4 className="font-bold text-white text-sm">{show.movie.title}</h4>
+                            <h4 className="font-bold text-slate-900 text-sm">{show.movie.title}</h4>
                             <span className="text-[10px] text-slate-400">
                               {show.movie.durationMins} mins • {show.movie.language}
                             </span>
@@ -150,7 +150,7 @@ export default function ManageShows() {
                         </div>
                       </td>
                       <td className="py-3 px-4 text-slate-600">
-                        <div className="font-semibold text-white">{show.screen.cinemaHall.name}</div>
+                        <div className="font-semibold text-slate-900">{show.screen.cinemaHall.name}</div>
                         <span className="text-[10px] text-slate-400">
                           {show.screen.screenNumber} • {show.screen.soundSystem}
                         </span>
@@ -161,7 +161,7 @@ export default function ManageShows() {
                         </div>
                         <span className="text-[10px] text-slate-500">{showDate}</span>
                       </td>
-                      <td className="py-3 px-4 font-bold text-white">
+                      <td className="py-3 px-4 font-bold text-slate-900">
                         ₹{show.basePrice.toFixed(2)}
                       </td>
                       <td className="py-3 px-4">
@@ -197,7 +197,7 @@ export default function ManageShows() {
               value={form.movieId}
               onChange={(e) => setForm({ ...form, movieId: e.target.value })}
               required
-              className="w-full bg-slate-100 border border-slate-200 rounded-xl px-3 py-2 text-xs text-white"
+              className="w-full bg-slate-100 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-900"
             >
               {movies.map((m) => (
                 <option key={m.id} value={m.id}>
@@ -215,7 +215,7 @@ export default function ManageShows() {
               value={form.screenId}
               onChange={(e) => setForm({ ...form, screenId: e.target.value })}
               required
-              className="w-full bg-slate-100 border border-slate-200 rounded-xl px-3 py-2 text-xs text-white"
+              className="w-full bg-slate-100 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-900"
             >
               {cinemas.map((c) =>
                 c.screens.map((s) => (
@@ -237,7 +237,7 @@ export default function ManageShows() {
                 value={form.startTime}
                 onChange={(e) => setForm({ ...form, startTime: e.target.value })}
                 required
-                className="w-full bg-slate-100 border border-slate-200 rounded-xl px-3 py-2 text-xs text-white"
+                className="w-full bg-slate-100 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-900"
               />
             </div>
             <div>
@@ -249,13 +249,13 @@ export default function ManageShows() {
                 value={form.basePrice}
                 onChange={(e) => setForm({ ...form, basePrice: e.target.value })}
                 required
-                className="w-full bg-slate-100 border border-slate-200 rounded-xl px-3 py-2 text-xs text-white"
+                className="w-full bg-slate-100 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-900"
               />
             </div>
           </div>
 
           <div className="p-3.5 rounded-xl bg-slate-100 border border-slate-200 text-xs text-slate-600">
-            <span className="font-bold text-white block mb-0.5">Automated Tier Multipliers</span>
+            <span className="font-bold text-slate-900 block mb-0.5">Automated Tier Multipliers</span>
             <span>Premium: 1.35x (₹{Math.round(form.basePrice * 1.35)}) • Recliner: 1.8x (₹{Math.round(form.basePrice * 1.8)})</span>
           </div>
 

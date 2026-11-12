@@ -98,7 +98,7 @@ export default function SeatBookingPage() {
     return (
       <div className="max-w-4xl mx-auto px-4 py-20 text-center">
         <h2 className="text-xl font-bold text-slate-900">Show information unavailable</h2>
-        <button onClick={() => navigate(-1)} className="mt-4 px-4 py-2 rounded-lg bg-red-600 text-white text-xs font-semibold">Go Back</button>
+        <button onClick={() => navigate(-1)} className="mt-4 px-4 py-2 rounded-lg bg-red-600 hover:bg-red-700 text-white text-xs font-semibold shadow">Go Back</button>
       </div>
     );
   }
