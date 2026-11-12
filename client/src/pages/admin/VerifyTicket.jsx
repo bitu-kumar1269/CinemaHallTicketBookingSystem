@@ -67,7 +67,7 @@ export default function VerifyTicket() {
         </p>
       </div>
 
-      <div className="bg-[#121824] border border-[#243047] rounded-3xl p-6 sm:p-8 space-y-6 shadow-2xl">
+      <div className="bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 space-y-6 shadow-2xl">
         <form onSubmit={handleVerify} className="space-y-4">
           <div>
             <div className="flex items-center justify-between mb-1.5">
@@ -87,7 +87,7 @@ export default function VerifyTicket() {
               value={payloadInput}
               onChange={(e) => setPayloadInput(e.target.value)}
               placeholder='{"data":{"ticketCode":"TCK-9841-B8X",...},"signature":"..."}'
-              className="w-full bg-[#1A2333] border border-[#243047] rounded-xl p-3 text-xs text-slate-200 font-mono placeholder-slate-600 focus:outline-none focus:border-red-600"
+              className="w-full bg-slate-100 border border-slate-200 rounded-xl p-3 text-xs text-slate-700 font-mono placeholder-slate-600 focus:outline-none focus:border-red-600"
               required
             />
           </div>
@@ -106,14 +106,14 @@ export default function VerifyTicket() {
         {result && (
           <div className="p-6 rounded-2xl bg-green-950/40 border-2 border-green-500 text-white space-y-4 animate-scaleUp">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-green-500/20 text-green-400 flex items-center justify-center shrink-0">
+              <div className="w-10 h-10 rounded-full bg-green-500/20 text-green-600 flex items-center justify-center shrink-0">
                 <CheckCircle2 className="w-6 h-6" />
               </div>
               <div>
-                <h3 className="text-base font-black text-green-400">
+                <h3 className="text-base font-black text-green-600">
                   ADMISSION GRANTED • VALID TICKET
                 </h3>
-                <span className="text-xs text-slate-300">
+                <span className="text-xs text-slate-600">
                   Digital signature verified & check-in timestamped.
                 </span>
               </div>
@@ -134,15 +134,15 @@ export default function VerifyTicket() {
               </div>
               <div>
                 <span className="text-slate-400 text-[10px] block uppercase font-bold">Cinema & Screen</span>
-                <span className="text-slate-200">{result.cinema} ({result.screen})</span>
+                <span className="text-slate-700">{result.cinema} ({result.screen})</span>
               </div>
               <div>
                 <span className="text-slate-400 text-[10px] block uppercase font-bold">Seats</span>
-                <span className="font-mono font-black text-cyan-400">{result.seats}</span>
+                <span className="font-mono font-black text-cyan-600">{result.seats}</span>
               </div>
               <div>
                 <span className="text-slate-400 text-[10px] block uppercase font-bold">Showtime</span>
-                <span className="font-bold text-amber-400">
+                <span className="font-bold text-amber-600">
                   {new Date(result.showTime).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}
                 </span>
               </div>
@@ -155,10 +155,10 @@ export default function VerifyTicket() {
           <div className="p-5 rounded-2xl bg-red-950/60 border-2 border-red-600 text-white flex items-start gap-3">
             <XCircle className="w-6 h-6 text-red-500 shrink-0 mt-0.5" />
             <div>
-              <h3 className="text-sm font-bold text-red-400 uppercase tracking-wider">
+              <h3 className="text-sm font-bold text-red-600 uppercase tracking-wider">
                 ENTRY DENIED / INVALID PASS
               </h3>
-              <p className="text-xs text-slate-300 mt-1">{errorMsg}</p>
+              <p className="text-xs text-slate-600 mt-1">{errorMsg}</p>
             </div>
           </div>
         )}

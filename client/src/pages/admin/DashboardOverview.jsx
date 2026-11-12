@@ -57,32 +57,32 @@ export default function DashboardOverview() {
       value: metrics ? `${metrics.activeViewersToday} Viewers` : '0',
       subtitle: `${metrics?.todayBookings || 0} bookings today`,
       icon: Users,
-      color: 'text-cyan-400',
-      bg: 'bg-cyan-950/30 border-cyan-800/40',
+      color: 'text-cyan-600',
+      bg: 'bg-cyan-50 border-cyan-200',
     },
     {
       title: 'Total Revenue',
       value: metrics ? `₹${metrics.totalRevenue.toLocaleString()}` : '₹0',
       subtitle: `+₹${metrics?.todayRevenue || 0} today`,
       icon: IndianRupee,
-      color: 'text-green-400',
-      bg: 'bg-green-950/30 border-green-800/40',
+      color: 'text-green-600',
+      bg: 'bg-green-50 border-green-200',
     },
     {
       title: 'Hall Occupancy',
       value: metrics ? `${metrics.occupancyRate}%` : '0%',
       subtitle: 'Average seat utilization',
       icon: Percent,
-      color: 'text-amber-400',
-      bg: 'bg-amber-950/30 border-amber-800/40',
+      color: 'text-amber-600',
+      bg: 'bg-amber-50 border-amber-200',
     },
     {
       title: 'Active Blockbusters',
       value: metrics ? `${metrics.totalMovies} Movies` : '0',
       subtitle: `Across ${metrics?.totalCinemas || 0} cinemas`,
       icon: Film,
-      color: 'text-red-400',
-      bg: 'bg-red-950/30 border-red-800/40',
+      color: 'text-red-600',
+      bg: 'bg-red-50 border-red-200',
     },
   ];
 
@@ -96,7 +96,7 @@ export default function DashboardOverview() {
           </span>
           <h1 className="text-2xl font-black text-white mt-0.5">Dashboard Overview</h1>
         </div>
-        <div className="flex items-center gap-2 text-xs text-slate-400 bg-[#121824] px-3.5 py-1.5 rounded-xl border border-[#243047]">
+        <div className="flex items-center gap-2 text-xs text-slate-400 bg-white px-3.5 py-1.5 rounded-xl border border-slate-200">
           <Calendar className="w-4 h-4 text-red-500" />
           <span>{new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric', year: 'numeric' })}</span>
         </div>
@@ -120,7 +120,7 @@ export default function DashboardOverview() {
                 </span>
                 <span className="text-[10px] text-slate-400 mt-0.5 block">{card.subtitle}</span>
               </div>
-              <div className={`p-3 rounded-xl bg-black/40 ${card.color}`}>
+              <div className={`p-3 rounded-xl bg-white/80 ${card.color}`}>
                 <Icon className="w-6 h-6" />
               </div>
             </div>
@@ -131,7 +131,7 @@ export default function DashboardOverview() {
       {/* Center 2-Column: Revenue Bars & Miniature Screen Occupancy */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
         {/* Left: Revenue Trend Chart (7 cols) */}
-        <div className="lg:col-span-7 bg-[#121824] border border-[#243047] rounded-2xl p-6 flex flex-col justify-between">
+        <div className="lg:col-span-7 bg-white border border-slate-200 rounded-2xl p-6 flex flex-col justify-between">
           <div className="flex items-center justify-between mb-6">
             <div>
               <span className="text-[10px] uppercase font-bold text-slate-400 tracking-wider">
@@ -139,13 +139,13 @@ export default function DashboardOverview() {
               </span>
               <h3 className="text-sm font-bold text-white mt-0.5">Past 7 Days Revenue</h3>
             </div>
-            <span className="flex items-center gap-1 text-xs text-green-400 font-bold">
+            <span className="flex items-center gap-1 text-xs text-green-600 font-bold">
               <TrendingUp className="w-3.5 h-3.5" /> High Demand
             </span>
           </div>
 
           {/* Simple Visual CSS Bar Chart */}
-          <div className="h-48 flex items-end justify-between gap-3 pt-6 border-b border-[#1E293B] pb-2">
+          <div className="h-48 flex items-end justify-between gap-3 pt-6 border-b border-slate-100 pb-2">
             {revenueChart.map((item, idx) => {
               const maxVal = Math.max(...revenueChart.map((r) => r.revenue), 1000);
               const heightPct = Math.max(15, Math.round((item.revenue / maxVal) * 100));
@@ -177,7 +177,7 @@ export default function DashboardOverview() {
       </div>
 
       {/* Recent Bookings Table */}
-      <div className="bg-[#121824] border border-[#243047] rounded-2xl p-6">
+      <div className="bg-white border border-slate-200 rounded-2xl p-6">
         <div className="flex items-center justify-between mb-4">
           <h3 className="text-sm font-bold text-white uppercase tracking-wider">
             Recent System Bookings
@@ -188,7 +188,7 @@ export default function DashboardOverview() {
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
             <thead>
-              <tr className="border-b border-[#1E293B] text-slate-400 uppercase text-[10px] tracking-wider">
+              <tr className="border-b border-slate-100 text-slate-400 uppercase text-[10px] tracking-wider">
                 <th className="pb-3 font-semibold">Booking Ref</th>
                 <th className="pb-3 font-semibold">Customer</th>
                 <th className="pb-3 font-semibold">Movie</th>
@@ -197,18 +197,18 @@ export default function DashboardOverview() {
                 <th className="pb-3 font-semibold">Status</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[#1E293B]">
+            <tbody className="divide-y divide-slate-100">
               {recentBookings.map((b) => (
-                <tr key={b.id} className="hover:bg-[#1A2333]/50 transition-colors">
+                <tr key={b.id} className="hover:bg-slate-100/50 transition-colors">
                   <td className="py-3 font-mono font-bold text-white">{b.bookingNumber}</td>
-                  <td className="py-3 text-slate-300">{b.user.fullName}</td>
-                  <td className="py-3 text-slate-200 font-semibold">{b.show.movie.title}</td>
-                  <td className="py-3 font-mono text-cyan-400">
+                  <td className="py-3 text-slate-600">{b.user.fullName}</td>
+                  <td className="py-3 text-slate-700 font-semibold">{b.show.movie.title}</td>
+                  <td className="py-3 font-mono text-cyan-600">
                     {b.seats.map((s) => `${s.seat.rowIdentifier}${s.seat.seatNumber}`).join(', ')}
                   </td>
-                  <td className="py-3 text-green-400 font-bold">₹{b.totalAmount.toFixed(2)}</td>
+                  <td className="py-3 text-green-600 font-bold">₹{b.totalAmount.toFixed(2)}</td>
                   <td className="py-3">
-                    <span className="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-green-500/20 text-green-400 border border-green-500/30">
+                    <span className="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-green-500/20 text-green-600 border border-green-500/30">
                       {b.status}
                     </span>
                   </td>

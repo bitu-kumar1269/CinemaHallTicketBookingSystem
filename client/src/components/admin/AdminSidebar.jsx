@@ -1,15 +1,6 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import {
-  LayoutDashboard,
-  Film,
-  Building2,
-  CalendarDays,
-  Ticket,
-  QrCode,
-  Users,
-  ArrowLeft,
-} from 'lucide-react';
+import { LayoutDashboard, Film, Building2, CalendarDays, Ticket, QrCode, ArrowLeft } from 'lucide-react';
 
 export default function AdminSidebar() {
   const location = useLocation();
@@ -29,13 +20,11 @@ export default function AdminSidebar() {
   };
 
   return (
-    <aside className="w-64 bg-[#0B0F17] border-r border-[#1E293B] min-h-[calc(100vh-5rem)] p-4 flex flex-col justify-between shrink-0">
+    <aside className="w-64 bg-white border-r border-slate-200 min-h-[calc(100vh-5rem)] p-4 flex flex-col justify-between shrink-0 shadow-sm">
       <div className="space-y-6">
         <div className="px-3 py-2">
-          <span className="text-[10px] font-bold uppercase tracking-wider text-red-500">
-            Cinema Management
-          </span>
-          <h2 className="text-base font-extrabold text-white mt-0.5">Admin Console</h2>
+          <span className="text-[10px] font-bold uppercase tracking-wider text-red-500">Cinema Management</span>
+          <h2 className="text-base font-extrabold text-slate-900 mt-0.5">Admin Console</h2>
         </div>
 
         <nav className="space-y-1.5">
@@ -47,9 +36,7 @@ export default function AdminSidebar() {
                 key={item.path}
                 to={item.path}
                 className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-semibold transition-all ${
-                  active
-                    ? 'bg-red-600 text-white shadow-neon-red'
-                    : 'text-slate-400 hover:text-white hover:bg-[#121824]'
+                  active ? 'bg-red-600 text-white shadow' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
                 }`}
               >
                 <Icon className="w-4 h-4" />
@@ -60,11 +47,8 @@ export default function AdminSidebar() {
         </nav>
       </div>
 
-      <div className="pt-6 border-t border-[#1E293B]">
-        <Link
-          to="/"
-          className="flex items-center gap-2 px-3 py-2 rounded-xl text-xs text-slate-400 hover:text-white hover:bg-[#121824] transition-colors"
-        >
+      <div className="pt-6 border-t border-slate-100">
+        <Link to="/" className="flex items-center gap-2 px-3 py-2 rounded-xl text-xs text-slate-500 hover:text-slate-900 hover:bg-slate-100 transition-colors">
           <ArrowLeft className="w-4 h-4" />
           <span>Exit to Customer Site</span>
         </Link>
@@ -72,4 +56,3 @@ export default function AdminSidebar() {
     </aside>
   );
 }
-

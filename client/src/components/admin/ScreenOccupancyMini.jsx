@@ -18,7 +18,7 @@ export default function ScreenOccupancyMini({ data }) {
   };
 
   return (
-    <div className="bg-[#121824] border border-[#243047] rounded-2xl p-6 shadow-xl flex flex-col justify-between">
+    <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-xl flex flex-col justify-between">
       <div>
         <div className="flex items-center justify-between mb-4">
           <div>
@@ -43,7 +43,7 @@ export default function ScreenOccupancyMini({ data }) {
 
         {/* Seat Matrix Grid */}
         <div className="flex justify-center">
-          <div className="grid grid-cols-8 gap-2 p-3 bg-[#0B0F17]/80 rounded-xl border border-[#1E293B]">
+          <div className="grid grid-cols-8 gap-2 p-3 bg-slate-100/80 rounded-xl border border-slate-100">
             {seats.slice(0, 64).map((seat) => (
               <div
                 key={seat.id}
@@ -58,7 +58,7 @@ export default function ScreenOccupancyMini({ data }) {
       </div>
 
       {/* Legend & Stats */}
-      <div className="mt-6 pt-4 border-t border-[#1E293B] flex items-center justify-between text-xs text-slate-400">
+      <div className="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-400">
         <div className="flex items-center gap-1.5">
           <span className="w-2.5 h-2.5 rounded-full bg-slate-600 inline-block" />
           <span>Avail ({summary.available})</span>
