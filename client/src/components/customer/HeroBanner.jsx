@@ -76,11 +76,11 @@ export default function HeroBanner({ movies = [] }) {
             {currentMovie.description}
           </p>
 
-          {/* ONLY ONE BUTTON */}
+          {/* ONLY ONE BUTTON — full width */}
           <div className="pt-1">
             <Link
               to={`/movies/${currentMovie.id}`}
-              className="inline-flex items-center justify-center px-9 py-3.5 rounded-xl bg-black text-white dark:bg-white dark:text-black font-bold text-sm tracking-wide shadow hover:bg-slate-800 dark:hover:bg-slate-100 active:scale-95 transition-all"
+              className="flex items-center justify-center w-full px-6 py-4 rounded-xl bg-black text-white font-bold text-sm tracking-wide shadow hover:bg-slate-800 active:scale-95 transition-all"
             >
               Book now
             </Link>

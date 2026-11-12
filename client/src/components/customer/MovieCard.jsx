@@ -6,7 +6,7 @@ export default function MovieCard({ movie }) {
   if (!movie) return null;
 
   return (
-    <div className="group bg-[#121824] border border-[#243047] rounded-2xl overflow-hidden flex flex-col transition-all duration-300 hover:border-red-600/60 hover:shadow-neon-red hover:-translate-y-1">
+    <div className="group bg-white border border-slate-200 rounded-2xl overflow-hidden flex flex-col transition-all duration-300 hover:border-red-500/60 hover:shadow-lg hover:-translate-y-1">
       {/* Poster Image Container */}
       <div className="relative aspect-[2/3] overflow-hidden bg-slate-900">
         <img
@@ -42,12 +42,12 @@ export default function MovieCard({ movie }) {
       </div>
 
       {/* Movie Details */}
-      <div className="p-4 flex-1 flex flex-col justify-between">
+      <div className="p-4 flex-1 flex flex-col justify-between bg-white">
         <div>
-          <h3 className="font-bold text-white text-base line-clamp-1 group-hover:text-red-500 transition-colors">
+          <h3 className="font-bold text-slate-900 text-base line-clamp-1 group-hover:text-red-500 transition-colors">
             {movie.title}
           </h3>
-          <p className="text-xs text-slate-400 line-clamp-1 mt-1">
+          <p className="text-xs text-slate-500 line-clamp-1 mt-1">
             {movie.genre}
           </p>
         </div>
@@ -56,7 +56,7 @@ export default function MovieCard({ movie }) {
         <div className="pt-4 mt-auto">
           <Link
             to={`/movies/${movie.id}`}
-            className="w-full py-2.5 px-4 rounded-xl bg-black text-white dark:bg-white dark:text-black hover:bg-slate-800 dark:hover:bg-slate-200 font-bold text-xs flex items-center justify-center gap-2 shadow-md active:scale-[0.98] transition-all"
+            className="w-full py-2.5 px-4 rounded-xl bg-black text-white hover:bg-slate-800 font-bold text-xs flex items-center justify-center gap-2 shadow-md active:scale-[0.98] transition-all"
           >
             <Ticket className="w-3.5 h-3.5" />
             Book now

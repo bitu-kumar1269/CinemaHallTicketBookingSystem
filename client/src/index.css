@@ -4,7 +4,7 @@
 
 @layer base {
   body {
-    @apply bg-[#0B0F17] text-slate-100 font-sans;
+    @apply bg-white text-slate-900 font-sans;
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   }
 }
@@ -24,10 +24,10 @@
   height: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: #0B0F17;
+  background: #f1f5f9;
 }
 ::-webkit-scrollbar-thumb {
-  background: #243047;
+  background: #cbd5e1;
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
@@ -46,7 +46,7 @@
   transform: translateY(-50%);
   width: 24px;
   height: 24px;
-  background-color: #0B0F17;
+  background-color: #f8fafc;
   border-radius: 50%;
 }
 .ticket-perforated-right::after {
@@ -57,7 +57,7 @@
   transform: translateY(-50%);
   width: 24px;
   height: 24px;
-  background-color: #0B0F17;
+  background-color: #f8fafc;
   border-radius: 50%;
 }
 

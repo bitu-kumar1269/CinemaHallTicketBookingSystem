@@ -53,11 +53,11 @@ export default function HomePage() {
       <HeroBanner movies={featuredList} />
 
       {/* Rest of page content inside max-width container */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-2 pb-6">
 
       {/* 2. All Movies Section Heading matching screenshot */}
       <div className="mb-6">
-        <h2 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white tracking-tight">
+        <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
           All movies
         </h2>
         <p className="text-xs text-slate-500 mt-1">
@@ -100,7 +100,7 @@ export default function HomePage() {
             <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">
               Curated Collections
             </span>
-            <h3 className="text-xl font-bold text-white mt-0.5">Browse by Genre</h3>
+            <h3 className="text-xl font-bold text-slate-900 mt-0.5">Browse by Genre</h3>
           </div>
 
           <div className="grid grid-cols-2 gap-3">
@@ -110,13 +110,13 @@ export default function HomePage() {
                 <Link
                   key={g.name}
                   to={`/movies?genre=${g.name}`}
-                  className="p-4 rounded-2xl bg-[#121824] border border-[#243047] hover:border-red-600/60 hover:shadow-neon-red flex flex-col justify-between h-28 transition-all group"
+                  className="p-4 rounded-2xl bg-slate-50 border border-slate-200 hover:border-red-500/60 hover:shadow-md flex flex-col justify-between h-28 transition-all group"
                 >
-                  <div className="w-8 h-8 rounded-lg bg-red-600/10 text-red-500 flex items-center justify-center group-hover:scale-110 group-hover:bg-red-600 group-hover:text-white transition-all">
+                  <div className="w-8 h-8 rounded-lg bg-red-50 text-red-500 flex items-center justify-center group-hover:scale-110 group-hover:bg-red-600 group-hover:text-white transition-all">
                     <Icon className="w-4 h-4" />
                   </div>
                   <div>
-                    <h4 className="text-xs font-bold text-white group-hover:text-red-500 transition-colors">
+                    <h4 className="text-xs font-bold text-slate-800 group-hover:text-red-500 transition-colors">
                       {g.name}
                     </h4>
                     <span className="text-[10px] text-slate-400">{g.count}</span>
@@ -127,11 +127,11 @@ export default function HomePage() {
           </div>
 
           {/* Special Cinema Experience Promo Card */}
-          <div className="p-5 rounded-2xl bg-gradient-to-br from-red-950/40 via-[#121824] to-[#121824] border border-red-900/50 space-y-3">
+          <div className="p-5 rounded-2xl bg-gradient-to-br from-red-50 via-white to-white border border-red-200/60 space-y-3">
             <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase bg-red-600 text-white">
               Dolby Atmos & IMAX
             </span>
-            <h4 className="text-sm font-bold text-white leading-snug">
+            <h4 className="text-sm font-bold text-slate-900 leading-snug">
               Immerse yourself in 3D Audio and Crystal-Clear 4K Laser Projection
             </h4>
             <p className="text-xs text-slate-400">
@@ -149,7 +149,7 @@ export default function HomePage() {
               <span className="text-[10px] font-bold uppercase tracking-wider text-amber-400">
                 Family & Children
               </span>
-              <h3 className="text-2xl font-black text-white flex items-center gap-2 mt-0.5">
+              <h3 className="text-2xl font-black text-slate-900 flex items-center gap-2 mt-0.5">
                 <Baby className="w-6 h-6 text-amber-400" />
                 For Kids & Families
               </h3>
@@ -178,7 +178,7 @@ export default function HomePage() {
               <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">
                 Anticipated Releases
               </span>
-              <h3 className="text-2xl font-black text-white flex items-center gap-2 mt-0.5">
+              <h3 className="text-2xl font-black text-slate-900 flex items-center gap-2 mt-0.5">
                 <Sparkles className="w-6 h-6 text-red-500" />
                 Coming Soon
               </h3>
