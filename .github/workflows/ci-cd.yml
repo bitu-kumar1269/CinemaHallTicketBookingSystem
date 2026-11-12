@@ -80,3 +80,4 @@ jobs:
       - name: Build Production Assets
         working-directory: ./client
         run: npm run build
+

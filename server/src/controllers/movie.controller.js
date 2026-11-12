@@ -42,16 +42,19 @@ export const getFeaturedMovies = async (req, res, next) => {
   try {
     const featured = await prisma.movie.findMany({
       where: { isFeatured: true, status: 'NOW_SHOWING' },
-      take: 5,
+      orderBy: [{ rating: 'desc' }, { releaseDate: 'desc' }],
+      take: 8,
     });
 
     const nowShowing = await prisma.movie.findMany({
       where: { status: 'NOW_SHOWING' },
-      take: 8,
+      orderBy: { releaseDate: 'desc' },
+      take: 12,
     });
 
     const comingSoon = await prisma.movie.findMany({
       where: { status: 'COMING_SOON' },
+      orderBy: { releaseDate: 'asc' },
       take: 6,
     });
 

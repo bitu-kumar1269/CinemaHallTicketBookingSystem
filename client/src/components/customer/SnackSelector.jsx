@@ -63,3 +63,4 @@ export default function SnackSelector({ snacks = [], selectedSnacks = {}, onUpda
     </div>
   );
 }
+

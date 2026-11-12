@@ -3,15 +3,12 @@ import api from '../../services/api';
 import HeroBanner from '../../components/customer/HeroBanner';
 import DateFilterBar from '../../components/customer/DateFilterBar';
 import MovieCard from '../../components/customer/MovieCard';
-import TrailerModal from '../../components/customer/TrailerModal';
-import { Sparkles, Clapperboard, Baby, Flame, Film, Compass } from 'lucide-react';
+import { Sparkles, Clapperboard, Baby, Flame, Film, Compass, Film as FilmIcon } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 export default function HomePage() {
   const [featuredData, setFeaturedData] = useState(null);
-  const [currentHero, setCurrentHero] = useState(null);
   const [selectedDate, setSelectedDate] = useState(() => new Date().toISOString().slice(0, 10));
-  const [trailerState, setTrailerState] = useState({ isOpen: false, url: '', title: '' });
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -19,7 +16,6 @@ export default function HomePage() {
       try {
         const res = await api.get('/movies/featured');
         setFeaturedData(res.data.data);
-        setCurrentHero(res.data.data.hero);
       } catch (err) {
         console.error('Failed to load featured movies:', err.message);
       } finally {
@@ -29,10 +25,6 @@ export default function HomePage() {
     fetchFeatured();
   }, []);
 
-  const handlePlayTrailer = (url, title) => {
-    setTrailerState({ isOpen: true, url, title });
-  };
-
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -41,6 +33,7 @@ export default function HomePage() {
     );
   }
 
+  const featuredList = featuredData?.featuredList || [];
   const nowShowing = featuredData?.nowShowing || [];
   const comingSoon = featuredData?.comingSoon || [];
   const kidsMovies = nowShowing.filter((m) => m.genre.toLowerCase().includes('animation') || m.certification === 'U');
@@ -55,37 +48,34 @@ export default function HomePage() {
   ];
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      {/* 1. Cinematic Hero Banner */}
-      {currentHero && (
-        <HeroBanner
-          movie={currentHero}
-          onPlayTrailer={(url) => handlePlayTrailer(url, currentHero.title)}
-          trendingMovies={featuredData?.featuredList || []}
-          onSelectMovie={(movie) => setCurrentHero(movie)}
-        />
-      )}
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+      {/* 1. Big Movie Poster Carousel - Rotates Every 5 Seconds with ONLY ONE "Book now" button */}
+      <HeroBanner movies={featuredList} />
 
-      {/* 2. Interactive Date Selector Bar */}
+      {/* 2. All Movies Section Heading matching screenshot */}
+      <div className="mb-6">
+        <h2 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white tracking-tight">
+          All movies
+        </h2>
+        <p className="text-xs text-slate-500 mt-1">
+          Explore movies running across all cinema locations
+        </p>
+      </div>
+
+      {/* 3. Interactive Date Selector Bar */}
       <DateFilterBar
         selectedDate={selectedDate}
         onSelectDate={(d) => setSelectedDate(d)}
       />
 
-      {/* 3. Main Grid: Now Showing & Browse by Genre */}
+      {/* 4. Movie Grid & Categories */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-16">
-        {/* Now Showing Section (8 cols) */}
+        {/* Movie Cards Section (8 cols) */}
         <div className="lg:col-span-8 space-y-6">
           <div className="flex items-center justify-between">
-            <div>
-              <span className="text-[10px] font-bold uppercase tracking-wider text-red-500">
-                In Theatres Now
-              </span>
-              <h2 className="text-2xl font-black text-white flex items-center gap-2 mt-0.5">
-                <Clapperboard className="w-6 h-6 text-red-600" />
-                Now Showing
-              </h2>
-            </div>
+            <span className="text-xs font-bold uppercase tracking-wider text-red-500">
+              Now Showing in Theatres
+            </span>
             <Link
               to="/movies"
               className="text-xs font-semibold text-red-500 hover:text-red-400 hover:underline"
@@ -95,7 +85,7 @@ export default function HomePage() {
           </div>
 
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-5">
-            {nowShowing.slice(0, 6).map((movie) => (
+            {nowShowing.map((movie) => (
               <MovieCard key={movie.id} movie={movie} />
             ))}
           </div>
@@ -107,7 +97,7 @@ export default function HomePage() {
             <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">
               Curated Collections
             </span>
-            <h2 className="text-xl font-bold text-white mt-0.5">Browse by Genre</h2>
+            <h3 className="text-xl font-bold text-white mt-0.5">Browse by Genre</h3>
           </div>
 
           <div className="grid grid-cols-2 gap-3">
@@ -138,9 +128,9 @@ export default function HomePage() {
             <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase bg-red-600 text-white">
               Dolby Atmos & IMAX
             </span>
-            <h3 className="text-sm font-bold text-white leading-snug">
+            <h4 className="text-sm font-bold text-white leading-snug">
               Immerse yourself in 3D Audio and Crystal-Clear 4K Laser Projection
-            </h3>
+            </h4>
             <p className="text-xs text-slate-400">
               Enjoy luxury recliners, gourmet food delivery at your seat, and seamless mobile check-in.
             </p>
@@ -148,7 +138,7 @@ export default function HomePage() {
         </div>
       </div>
 
-      {/* 4. For Kids & Family Section */}
+      {/* 5. For Kids & Family Section */}
       {kidsMovies.length > 0 && (
         <div className="mb-16">
           <div className="flex items-center justify-between mb-6">
@@ -156,10 +146,10 @@ export default function HomePage() {
               <span className="text-[10px] font-bold uppercase tracking-wider text-amber-400">
                 Family & Children
               </span>
-              <h2 className="text-2xl font-black text-white flex items-center gap-2 mt-0.5">
+              <h3 className="text-2xl font-black text-white flex items-center gap-2 mt-0.5">
                 <Baby className="w-6 h-6 text-amber-400" />
                 For Kids & Families
-              </h2>
+              </h3>
             </div>
             <Link
               to="/movies?genre=Animation"
@@ -177,7 +167,7 @@ export default function HomePage() {
         </div>
       )}
 
-      {/* 5. Coming Soon Section */}
+      {/* 6. Coming Soon Section */}
       {comingSoon.length > 0 && (
         <div className="mb-12">
           <div className="flex items-center justify-between mb-6">
@@ -185,10 +175,10 @@ export default function HomePage() {
               <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">
                 Anticipated Releases
               </span>
-              <h2 className="text-2xl font-black text-white flex items-center gap-2 mt-0.5">
+              <h3 className="text-2xl font-black text-white flex items-center gap-2 mt-0.5">
                 <Sparkles className="w-6 h-6 text-red-500" />
-                Coming Soon to CineWave
-              </h2>
+                Coming Soon
+              </h3>
             </div>
           </div>
 
@@ -199,14 +189,6 @@ export default function HomePage() {
           </div>
         </div>
       )}
-
-      {/* Trailer Modal */}
-      <TrailerModal
-        isOpen={trailerState.isOpen}
-        onClose={() => setTrailerState({ isOpen: false, url: '', title: '' })}
-        trailerUrl={trailerState.url}
-        movieTitle={trailerState.title}
-      />
     </div>
   );
 }

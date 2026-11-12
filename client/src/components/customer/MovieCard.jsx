@@ -52,17 +52,18 @@ export default function MovieCard({ movie }) {
           </p>
         </div>
 
-        {/* Buy Ticket Button */}
+        {/* Book now Button */}
         <div className="pt-4 mt-auto">
           <Link
             to={`/movies/${movie.id}`}
-            className="w-full py-2.5 px-4 rounded-xl bg-red-600 hover:bg-red-700 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-neon-red active:scale-[0.98] transition-all"
+            className="w-full py-2.5 px-4 rounded-xl bg-black text-white dark:bg-white dark:text-black hover:bg-slate-800 dark:hover:bg-slate-200 font-bold text-xs flex items-center justify-center gap-2 shadow-md active:scale-[0.98] transition-all"
           >
             <Ticket className="w-3.5 h-3.5" />
-            Buy Ticket
+            Book now
           </Link>
         </div>
       </div>
     </div>
   );
 }
+

@@ -150,6 +150,23 @@ async function main() {
   const movies = await prisma.movie.createMany({
     data: [
       {
+        title: 'Ramayana',
+        description: 'When Rakshasa emperor Ravana, invincible to all but man, conquers the three worlds, Lord Vishnu descends as noble prince Rama. Bound by his father\'s vow, Rama enters perilous exile with virtuous Sita and devoted Lakshmana. When Ravana abducts Sita, God in human form rises to fight the greatest war ever. Accessibility through Audio Description (AD) & Closed Captions (CC) is available for this movie on the \'CineDubs\' app.',
+        genre: 'Epic, Mythological',
+        language: 'Hindi',
+        durationMins: 165,
+        releaseDate: new Date('2026-10-24'),
+        director: 'Nitesh Tiwari',
+        cast: 'Ranbir Kapoor, Sai Pallavi, Yash, Sunny Deol',
+        rating: 9.6,
+        posterUrl: '/ramayana-poster.jpg',
+        backdropUrl: '/ramayana-backdrop.jpg',
+        trailerUrl: 'https://www.youtube.com/watch?v=cqGjhVJWtEg',
+        certification: 'U',
+        status: 'NOW_SHOWING',
+        isFeatured: true,
+      },
+      {
         title: 'Spider-Man: Across the Multiverse',
         description: 'Miles Morales catapults across the Multiverse, where he encounters a team of Spider-People charged with protecting its very existence. When the heroes clash on how to handle a new threat, Miles must redefine what it means to be a hero.',
         genre: 'Action / Sci-Fi / Adventure',
@@ -198,7 +215,7 @@ async function main() {
         trailerUrl: 'https://www.youtube.com/watch?v=qqrpMRDuPfc',
         certification: 'UA',
         status: 'NOW_SHOWING',
-        isFeatured: false,
+        isFeatured: true,
       },
       {
         title: 'Doctor Strange: Multiverse of Shadows',
@@ -215,7 +232,7 @@ async function main() {
         trailerUrl: 'https://www.youtube.com/watch?v=aWzlQ2N6qqg',
         certification: 'UA',
         status: 'NOW_SHOWING',
-        isFeatured: false,
+        isFeatured: true,
       },
       {
         title: 'Wakanda Forever: Legacy of Bast',

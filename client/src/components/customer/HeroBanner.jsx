@@ -1,125 +1,134 @@
-import React from 'react';
-import { Play, Ticket, Star, Clock, Calendar } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
-export default function HeroBanner({ movie, onPlayTrailer, trendingMovies = [], onSelectMovie }) {
-  if (!movie) return null;
+export default function HeroBanner({ movies = [] }) {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+
+  // If only one movie or empty, handle safely
+  const activeMovies = movies.length > 0 ? movies : [];
+
+  // Auto-slide every 5 seconds (5000 ms)
+  useEffect(() => {
+    if (activeMovies.length <= 1 || isPaused) return;
+
+    const timer = setInterval(() => {
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % activeMovies.length);
+    }, 5000);
+
+    return () => clearInterval(timer);
+  }, [activeMovies.length, isPaused, currentIndex]);
+
+  if (activeMovies.length === 0) return null;
+
+  const currentMovie = activeMovies[currentIndex] || activeMovies[0];
+
+  const handlePrev = () => {
+    setCurrentIndex((prev) => (prev === 0 ? activeMovies.length - 1 : prev - 1));
+  };
+
+  const handleNext = () => {
+    setCurrentIndex((prev) => (prev + 1) % activeMovies.length);
+  };
 
   return (
-    <div className="relative rounded-3xl overflow-hidden bg-[#121824] border border-[#243047] shadow-2xl mb-12">
-      {/* Background Backdrop with Gradient Overlay */}
-      <div className="absolute inset-0 z-0">
-        <img
-          src={movie.backdropUrl || movie.posterUrl}
-          alt={movie.title}
-          className="w-full h-full object-cover object-top filter brightness-[0.38] scale-105 transform hover:scale-100 transition-transform duration-1000"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0B0F17] via-[#0B0F17]/60 to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#0B0F17] via-[#0B0F17]/80 to-transparent" />
-      </div>
-
-      <div className="relative z-10 max-w-7xl mx-auto px-6 py-12 md:py-20 lg:py-24 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-        {/* Left Column: Movie Info & CTAs */}
-        <div className="lg:col-span-8 space-y-6">
-          {/* Tags */}
-          <div className="flex flex-wrap items-center gap-2.5 text-xs">
-            <span className="px-3 py-1 rounded-full font-bold uppercase tracking-wider bg-red-600 text-white shadow-neon-red">
-              Now Showing
-            </span>
-            <span className="px-3 py-1 rounded-full bg-[#1A2333]/90 text-amber-400 font-semibold border border-amber-500/30 flex items-center gap-1">
-              <Star className="w-3.5 h-3.5 fill-current" /> {movie.rating.toFixed(1)} Rating
-            </span>
-            <span className="px-3 py-1 rounded-full bg-[#1A2333]/90 text-slate-300 font-medium border border-slate-700">
-              {movie.certification} Certificate
-            </span>
-            <span className="px-3 py-1 rounded-full bg-[#1A2333]/90 text-slate-300 font-medium border border-slate-700">
-              {movie.language} • IMAX & 4K
-            </span>
-          </div>
-
-          {/* Heading */}
-          <div className="space-y-2">
-            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-none drop-shadow-md">
-              {movie.title}
-            </h1>
-            <p className="text-sm sm:text-base text-red-500 font-semibold uppercase tracking-wider">
-              Watch your favorite movie on the big screen
-            </p>
-          </div>
-
-          {/* Synopsis */}
-          <p className="text-slate-300 text-sm sm:text-base line-clamp-3 max-w-2xl leading-relaxed">
-            {movie.description}
-          </p>
-
-          {/* Meta line */}
-          <div className="flex items-center gap-6 text-xs text-slate-400 pt-1">
-            <span className="flex items-center gap-1.5">
-              <Clock className="w-4 h-4 text-red-500" /> {movie.durationMins} mins
-            </span>
-            <span className="flex items-center gap-1.5">
-              <Calendar className="w-4 h-4 text-red-500" /> Released {new Date(movie.releaseDate).getFullYear()}
-            </span>
-            <span>Genre: <strong className="text-slate-200">{movie.genre}</strong></span>
-          </div>
-
-          {/* CTA Buttons */}
-          <div className="flex flex-wrap items-center gap-4 pt-3">
-            <Link
-              to={`/movies/${movie.id}`}
-              className="inline-flex items-center gap-2.5 px-8 py-3.5 rounded-xl bg-red-600 hover:bg-red-700 text-white font-bold text-sm tracking-wide shadow-neon-red hover:shadow-red-600/50 hover:scale-[1.02] active:scale-[0.98] transition-all"
-            >
-              <Ticket className="w-5 h-5" />
-              Buy Ticket
-            </Link>
-            <button
-              onClick={() => onPlayTrailer(movie.trailerUrl)}
-              className="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-xl bg-[#1A2333]/90 hover:bg-[#243047] text-slate-200 hover:text-white font-semibold text-sm border border-[#243047] transition-all hover:scale-[1.02]"
-            >
-              <Play className="w-4 h-4 text-red-500 fill-current" />
-              Play Trailer
-            </button>
-          </div>
+    <div
+      className="relative w-full mb-12 select-none"
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(false)}
+    >
+      {/* Outer Banner Card Container with Ambient Blur */}
+      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-slate-100 via-slate-200/80 to-slate-100 dark:from-[#111722] dark:via-[#161F2E] dark:to-[#111722] border border-slate-200 dark:border-[#223047] shadow-xl transition-all duration-700">
+        {/* Soft Background Glow matching movie poster */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-20 dark:opacity-30">
+          <img
+            src={currentMovie.backdropUrl || currentMovie.posterUrl}
+            alt=""
+            className="w-full h-full object-cover filter blur-3xl scale-125 transform transition-all duration-1000"
+          />
         </div>
 
-        {/* Right Column: Trending Thumbnails Carousel Preview */}
-        <div className="hidden lg:block lg:col-span-4">
-          <div className="bg-[#0B0F17]/80 backdrop-blur-md border border-[#243047] rounded-2xl p-4 shadow-xl">
-            <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3 flex items-center justify-between">
-              <span>Trending Cinema</span>
-              <span className="text-[10px] text-red-500">Fast Filling</span>
-            </h3>
-            <div className="space-y-3">
-              {trendingMovies.slice(0, 3).map((item) => (
-                <div
-                  key={item.id}
-                  onClick={() => onSelectMovie(item)}
-                  className={`flex items-center gap-3 p-2 rounded-xl cursor-pointer border transition-all ${
-                    item.id === movie.id
-                      ? 'bg-red-950/40 border-red-600/60 shadow-neon-red'
-                      : 'bg-[#121824] border-[#243047] hover:border-slate-500'
-                  }`}
-                >
-                  <img
-                    src={item.posterUrl}
-                    alt={item.title}
-                    className="w-12 h-16 rounded-lg object-cover shrink-0 shadow"
-                  />
-                  <div className="min-w-0 flex-1">
-                    <h4 className="text-xs font-bold text-white truncate">{item.title}</h4>
-                    <p className="text-[11px] text-slate-400 truncate">{item.genre}</p>
-                    <div className="flex items-center gap-2 mt-1 text-[10px] text-slate-400">
-                      <span className="text-amber-400 font-semibold flex items-center gap-0.5">
-                        <Star className="w-2.5 h-2.5 fill-current" /> {item.rating.toFixed(1)}
-                      </span>
-                      <span>•</span>
-                      <span>{item.durationMins}m</span>
-                    </div>
-                  </div>
-                </div>
-              ))}
+        {/* Hero Content Grid */}
+        <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-10 lg:px-14 py-10 md:py-14 min-h-[440px] md:min-h-[480px] flex items-center justify-between gap-8 md:gap-12">
+          {/* Left Arrow Button */}
+          <button
+            onClick={handlePrev}
+            aria-label="Previous movie"
+            className="absolute left-3 sm:left-5 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-white/80 dark:bg-black/60 backdrop-blur-md border border-slate-300 dark:border-slate-700 text-slate-800 dark:text-white flex items-center justify-center shadow-md hover:scale-110 active:scale-95 transition-all"
+          >
+            <ChevronLeft className="w-5 h-5" />
+          </button>
+
+          {/* Left Column: Movie Info & ONLY ONE "Book now" Button */}
+          <div className="flex-1 max-w-2xl pl-6 sm:pl-8 space-y-4 md:space-y-5 animate-fadeIn">
+            {/* Title */}
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-tight">
+              {currentMovie.title}
+            </h1>
+
+            {/* Tagline / Certificate | Genre */}
+            <p className="text-base sm:text-lg font-bold text-slate-800 dark:text-slate-200">
+              {currentMovie.certification} | {currentMovie.genre}
+            </p>
+
+            {/* Synopsis Description */}
+            <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 line-clamp-4 leading-relaxed font-normal">
+              {currentMovie.description}
+            </p>
+
+            {/* ONLY ONE BUTTON: Book now */}
+            <div className="pt-2">
+              <Link
+                to={`/movies/${currentMovie.id}`}
+                className="inline-flex items-center justify-center px-9 py-3.5 rounded-xl bg-black text-white dark:bg-white dark:text-black hover:bg-slate-800 dark:hover:bg-slate-200 font-bold text-sm tracking-wide shadow-lg hover:shadow-xl active:scale-95 transition-all"
+              >
+                Book now
+              </Link>
             </div>
           </div>
+
+          {/* Right Column: Big Movie Poster Card */}
+          <div className="pr-6 sm:pr-8 shrink-0 flex items-center justify-center">
+            <div className="relative group">
+              <div className="w-60 sm:w-72 md:w-80 lg:w-[340px] aspect-[3/4] rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border-2 border-slate-200/60 dark:border-slate-700/60 bg-black transition-all duration-500 transform group-hover:scale-[1.02]">
+                <img
+                  src={currentMovie.posterUrl}
+                  alt={currentMovie.title}
+                  key={currentMovie.id}
+                  className="w-full h-full object-cover object-center animate-fadeIn"
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Right Arrow Button */}
+          <button
+            onClick={handleNext}
+            aria-label="Next movie"
+            className="absolute right-3 sm:right-5 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-white/80 dark:bg-black/60 backdrop-blur-md border border-slate-300 dark:border-slate-700 text-slate-800 dark:text-white flex items-center justify-center shadow-md hover:scale-110 active:scale-95 transition-all"
+          >
+            <ChevronRight className="w-5 h-5" />
+          </button>
+        </div>
+
+        {/* Bottom Center Indicator Dots */}
+        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2">
+          {activeMovies.map((m, index) => {
+            const isActive = index === currentIndex;
+            return (
+              <button
+                key={m.id || index}
+                onClick={() => setCurrentIndex(index)}
+                aria-label={`Go to slide ${index + 1}`}
+                className={`transition-all duration-300 rounded-full ${
+                  isActive
+                    ? 'w-7 h-2 bg-slate-900 dark:bg-white shadow'
+                    : 'w-2 h-2 bg-slate-400/60 dark:bg-slate-600 hover:bg-slate-500'
+                }`}
+              />
+            );
+          })}
         </div>
       </div>
     </div>

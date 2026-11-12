@@ -174,3 +174,4 @@ npm test
 2. **Pessimistic DB Transactions**: Checkout validation locks the row with `SELECT ... FOR UPDATE` inside an ACID PostgreSQL transaction. Conflicting seat attempts are rejected with `409 Conflict`.
 3. **Automated Background Reaper**: A recurring background process cleans up abandoned locks every 15 seconds and broadcasts `seat_released` to active clients.
 4. **Cryptographic QR Validation**: Digital passes are signed with HMAC-SHA256. Scanning a ticket at `/admin/verify-qr` verifies the signature and marks `isUsed = true` to prevent duplicate entry attempts.
+

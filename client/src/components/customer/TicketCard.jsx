@@ -153,3 +153,4 @@ export default function TicketCard({ booking, qrDataUrl, onDownloadPDF }) {
     </div>
   );
 }
+

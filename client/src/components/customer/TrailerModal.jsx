@@ -38,3 +38,4 @@ export default function TrailerModal({ isOpen, onClose, trailerUrl, movieTitle }
     </Modal>
   );
 }
+
