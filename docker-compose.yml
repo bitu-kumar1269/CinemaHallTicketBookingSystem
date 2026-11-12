@@ -1,0 +1,57 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: cinewave_postgres
+    restart: always
+    environment:
+      POSTGRES_USER: cinema_admin
+      POSTGRES_PASSWORD: cinema_secure_password_2026
+      POSTGRES_DB: cinema_booking_db
+    ports:
+      - '5432:5432'
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U cinema_admin -d cinema_booking_db']
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: cinewave_server
+    restart: always
+    environment:
+      PORT: 5005
+      NODE_ENV: production
+      DATABASE_URL: postgresql://cinema_admin:cinema_secure_password_2026@postgres:5432/cinema_booking_db?schema=public
+      JWT_SECRET: super_cinema_secret_jwt_key_2026_dev_production_grade_token
+      JWT_EXPIRES_IN: 7d
+      SEAT_LOCK_MINUTES: 8
+      RAZORPAY_KEY_ID: rzp_test_cinema123456
+      RAZORPAY_KEY_SECRET: secret_cinema_razorpay_mock_key
+      QR_SIGNING_SECRET: qr_cinema_security_hmac_secret_2026
+      CLIENT_URL: http://localhost
+    ports:
+      - '5005:5005'
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    container_name: cinewave_client
+    restart: always
+    ports:
+      - '80:80'
+    depends_on:
+      - server
+
+volumes:
+  postgres_data:

@@ -1,0 +1,63 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-[#0B0F17] text-slate-100 font-sans;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+}
+
+/* Custom Cinema Screen Curve */
+.screen-curve {
+  height: 24px;
+  background: linear-gradient(180deg, rgba(229, 9, 20, 0.45) 0%, rgba(229, 9, 20, 0) 100%);
+  border-top: 3px solid #E50914;
+  border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+  box-shadow: 0 -8px 25px rgba(229, 9, 20, 0.5);
+}
+
+/* Custom Scrollbar for modern look */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #0B0F17;
+}
+::-webkit-scrollbar-thumb {
+  background: #243047;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #E50914;
+}
+
+/* Perforated ticket edge */
+.ticket-perforated-left {
+  position: relative;
+}
+.ticket-perforated-left::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: -12px;
+  transform: translateY(-50%);
+  width: 24px;
+  height: 24px;
+  background-color: #0B0F17;
+  border-radius: 50%;
+}
+.ticket-perforated-right::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: -12px;
+  transform: translateY(-50%);
+  width: 24px;
+  height: 24px;
+  background-color: #0B0F17;
+  border-radius: 50%;
+}
+

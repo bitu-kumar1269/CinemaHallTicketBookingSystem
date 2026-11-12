@@ -1,0 +1,82 @@
+name: CineWave CI/CD Pipeline
+
+on:
+  push:
+    branches: [main, master, develop]
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  backend-test:
+    name: Backend Tests & Database Schema Verification
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: cinema_test_user
+          POSTGRES_PASSWORD: cinema_test_password
+          POSTGRES_DB: cinema_test_db
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+          cache-dependency-path: server/package-lock.json
+
+      - name: Install Backend Dependencies
+        working-directory: ./server
+        run: npm ci
+
+      - name: Generate Prisma Client & Push Test Schema
+        working-directory: ./server
+        env:
+          DATABASE_URL: postgresql://cinema_test_user:cinema_test_password@localhost:5432/cinema_test_db?schema=public
+        run: |
+          npx prisma generate
+          npx prisma db push
+          node prisma/seed.js
+
+      - name: Run Integration Tests
+        working-directory: ./server
+        env:
+          DATABASE_URL: postgresql://cinema_test_user:cinema_test_password@localhost:5432/cinema_test_db?schema=public
+          JWT_SECRET: ci_cd_test_jwt_secret_key_12345
+          QR_SIGNING_SECRET: ci_cd_test_qr_secret_12345
+        run: npm test
+
+  frontend-build:
+    name: Frontend Build & Bundle Verification
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+          cache-dependency-path: client/package-lock.json
+
+      - name: Install Frontend Dependencies
+        working-directory: ./client
+        run: npm ci
+
+      - name: Build Production Assets
+        working-directory: ./client
+        run: npm run build
