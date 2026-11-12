@@ -90,7 +90,7 @@ export default function MovieDetailPage() {
 
           <div className="flex-1 space-y-3 text-center md:text-left">
             <div className="flex flex-wrap items-center justify-center md:justify-start gap-2 text-xs">
-              <span className="px-3 py-1 rounded-full bg-red-600 text-white font-bold uppercase shadow-sm">
+              <span className="px-3 py-1 rounded-full bg-slate-900 text-white font-bold uppercase shadow-sm">
                 {movie.status === 'NOW_SHOWING' ? 'Now Showing' : 'Coming Soon'}
               </span>
               <span className="px-3 py-1 rounded-full bg-white border border-slate-200 text-slate-800 font-bold flex items-center gap-1 shadow-sm">
@@ -107,7 +107,7 @@ export default function MovieDetailPage() {
             <h1 className="text-3xl sm:text-5xl font-black text-slate-900 tracking-tight">{movie.title}</h1>
 
             <p className="text-xs sm:text-sm text-slate-600 flex flex-wrap items-center justify-center md:justify-start gap-4">
-              <span className="flex items-center gap-1"><Clock className="w-4 h-4 text-red-500" /> {movie.durationMins} minutes</span>
+              <span className="flex items-center gap-1"><Clock className="w-4 h-4 text-slate-700" /> {movie.durationMins} minutes</span>
               <span>•</span>
               <span>{movie.genre}</span>
               <span>•</span>
@@ -119,7 +119,7 @@ export default function MovieDetailPage() {
                 onClick={() => setTrailerOpen(true)}
                 className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-slate-900 hover:bg-black text-white text-xs font-bold shadow transition-all hover:scale-105"
               >
-                <Play className="w-4 h-4 text-red-500 fill-current" />
+                <Play className="w-4 h-4 text-white fill-current" />
                 Play Official Trailer
               </button>
             </div>
@@ -154,8 +154,8 @@ export default function MovieDetailPage() {
           {/* Right: Date Selector & Shows */}
           <div className="lg:col-span-8 space-y-6">
             <div>
-              <span className="text-[10px] font-bold uppercase tracking-wider text-red-500">Book Tickets</span>
-              <h2 className="text-xl font-bold text-slate-900 mt-0.5">Select Date & Showtime</h2>
+              <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500">Book Tickets</span>
+              <h2 className="text-xl font-bold text-slate-900 mt-0.5">Select Date &amp; Showtime</h2>
             </div>
 
             {/* Date Pills */}
@@ -168,8 +168,8 @@ export default function MovieDetailPage() {
                     onClick={() => setSelectedDate(tab.iso)}
                     className={`flex flex-col items-center justify-center min-w-[80px] py-2.5 px-3 rounded-xl border transition-all ${
                       isSelected
-                        ? 'bg-red-600 border-red-500 text-white shadow'
-                        : 'bg-white border-slate-200 text-slate-500 hover:border-slate-400 hover:text-slate-800'
+                        ? 'bg-slate-900 border-slate-900 text-white shadow-sm'
+                        : 'bg-white border-slate-200 text-slate-600 hover:border-slate-400 hover:text-slate-900'
                     }`}
                   >
                     <span className="text-[10px] uppercase font-semibold">{tab.label}</span>
@@ -197,7 +197,7 @@ export default function MovieDetailPage() {
                       <div>
                         <h4 className="font-bold text-slate-900 text-sm sm:text-base">{cinema.name}</h4>
                         <p className="text-xs text-slate-500 flex items-center gap-1 mt-0.5">
-                          <MapPin className="w-3.5 h-3.5 text-red-500" />
+                          <MapPin className="w-3.5 h-3.5 text-slate-800" />
                           {cinema.address}, {cinema.city}
                         </p>
                       </div>
@@ -211,11 +211,11 @@ export default function MovieDetailPage() {
                           <button
                             key={show.id}
                             onClick={() => navigate(`/booking/${show.id}`)}
-                            className="group p-3 rounded-xl bg-slate-50 border border-slate-200 hover:border-red-500 hover:bg-red-50 text-left transition-all hover:scale-105 active:scale-95"
+                            className="group p-3 rounded-xl bg-slate-50 border border-slate-200 hover:border-slate-900 hover:bg-slate-100 text-left transition-all hover:scale-105 active:scale-95"
                           >
-                            <span className="text-sm font-bold text-slate-900 group-hover:text-red-600 block">{timeStr}</span>
+                            <span className="text-sm font-bold text-slate-900 group-hover:text-black block">{timeStr}</span>
                             <span className="text-[10px] text-slate-500 block mt-0.5">{show.screen.screenNumber}</span>
-                            <span className="text-[10px] text-amber-600 font-semibold block mt-1">From ₹{show.basePrice.toFixed(0)}</span>
+                            <span className="text-[10px] text-slate-700 font-semibold block mt-1">From ₹{show.basePrice.toFixed(0)}</span>
                           </button>
                         );
                       })}

@@ -1,198 +1,283 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import api from '../../services/api';
 import HeroBanner from '../../components/customer/HeroBanner';
-import DateFilterBar from '../../components/customer/DateFilterBar';
 import MovieCard from '../../components/customer/MovieCard';
-import { Sparkles, Clapperboard, Baby, Flame, Film, Compass, Film as FilmIcon } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { SlidersHorizontal, ChevronDown, X } from 'lucide-react';
 
 export default function HomePage() {
   const [featuredData, setFeaturedData] = useState(null);
-  const [selectedDate, setSelectedDate] = useState(() => new Date().toISOString().slice(0, 10));
+  const [allMovies, setAllMovies] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  // Active filter state
+  const [activeFilterPill, setActiveFilterPill] = useState(null);
+  const [filterModalOpen, setFilterModalOpen] = useState(false);
+  const [selectedLanguage, setSelectedLanguage] = useState('');
+  const [selectedGenre, setSelectedGenre] = useState('');
+
   useEffect(() => {
-    const fetchFeatured = async () => {
+    const fetchHomeData = async () => {
       try {
-        const res = await api.get('/movies/featured');
-        setFeaturedData(res.data.data);
+        const [featuredRes, allMoviesRes] = await Promise.all([
+          api.get('/movies/featured'),
+          api.get('/movies'),
+        ]);
+        setFeaturedData(featuredRes.data.data);
+        setAllMovies(allMoviesRes.data.data || []);
       } catch (err) {
-        console.error('Failed to load featured movies:', err.message);
+        console.error('Failed to load homepage data:', err.message);
       } finally {
         setLoading(false);
       }
     };
-    fetchFeatured();
+    fetchHomeData();
   }, []);
+
+  const featuredList = featuredData?.featuredList || [];
+
+  // Filter options matching Screenshot 1
+  const filterPills = [
+    { id: 'Hindi', label: 'Hindi' },
+    { id: 'English', label: 'English' },
+    { id: 'New Releases', label: 'New Releases' },
+    { id: 'Re-Releases', label: 'Re-Releases' },
+    { id: '3D', label: '3D' },
+    { id: '3D SCREEN X', label: '3D SCREEN X' },
+  ];
+
+  const handlePillClick = (pillId) => {
+    if (activeFilterPill === pillId) {
+      setActiveFilterPill(null);
+    } else {
+      setActiveFilterPill(pillId);
+    }
+  };
+
+  // Filtered movies calculation
+  const displayedMovies = useMemo(() => {
+    let result = [...allMovies];
+
+    // Pill filters
+    if (activeFilterPill === 'Hindi') {
+      result = result.filter((m) => m.language === 'Hindi');
+    } else if (activeFilterPill === 'English') {
+      result = result.filter((m) => m.language === 'English');
+    } else if (activeFilterPill === 'New Releases') {
+      result = result.filter((m) => m.status === 'NOW_SHOWING');
+    } else if (activeFilterPill === 'Re-Releases') {
+      result = result.filter((m) => m.status === 'COMING_SOON' || m.certification === 'A');
+    } else if (activeFilterPill === '3D') {
+      result = result.filter((m) => m.genre.includes('Action') || m.genre.includes('Sci-Fi') || m.genre.includes('Animation'));
+    } else if (activeFilterPill === '3D SCREEN X') {
+      result = result.filter((m) => m.genre.includes('Action') || m.genre.includes('Epic') || m.genre.includes('Adventure'));
+    }
+
+    // Modal/advanced filters if applied
+    if (selectedLanguage) {
+      result = result.filter((m) => m.language === selectedLanguage);
+    }
+    if (selectedGenre) {
+      result = result.filter((m) => m.genre.toLowerCase().includes(selectedGenre.toLowerCase()));
+    }
+
+    return result;
+  }, [allMovies, activeFilterPill, selectedLanguage, selectedGenre]);
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="w-12 h-12 border-4 border-red-600 border-t-transparent rounded-full animate-spin"></div>
+      <div className="min-h-screen flex items-center justify-center bg-white">
+        <div className="w-10 h-10 border-4 border-slate-900 border-t-transparent rounded-full animate-spin"></div>
       </div>
     );
   }
 
-  const featuredList = featuredData?.featuredList || [];
-  const nowShowing = featuredData?.nowShowing || [];
-  const comingSoon = featuredData?.comingSoon || [];
-  const kidsMovies = nowShowing.filter((m) => m.genre.toLowerCase().includes('animation') || m.certification === 'U');
-
-  const genres = [
-    { name: 'Action', count: '18+ Movies', icon: Flame },
-    { name: 'Sci-Fi', count: '12+ Movies', icon: Sparkles },
-    { name: 'Adventure', count: '15+ Movies', icon: Compass },
-    { name: 'Comedy', count: '9+ Movies', icon: Clapperboard },
-    { name: 'Horror', count: '6+ Movies', icon: Film },
-    { name: 'Animation', count: '8+ Movies', icon: Baby },
-  ];
+  const allLanguages = ['Hindi', 'English', 'Tamil'];
+  const allGenres = ['Action', 'Comedy', 'Drama', 'Sci-Fi', 'Fantasy', 'Animation', 'Crime', 'Horror'];
 
   return (
-    <div>
-      {/* 1. Big Movie Poster Carousel - Full Width, No Container Wrapper */}
+    <div className="bg-white min-h-screen text-slate-900">
+      {/* 1. Full-width Hero Carousel */}
       <HeroBanner movies={featuredList} />
 
-      {/* Rest of page content inside max-width container */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-2 pb-6">
-
-      {/* 2. All Movies Section Heading matching screenshot */}
-      <div className="mb-6">
-        <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
-          All movies
-        </h2>
-        <p className="text-xs text-slate-500 mt-1">
-          Explore movies running across all cinema locations
-        </p>
-      </div>
-
-      {/* 3. Interactive Date Selector Bar */}
-      <DateFilterBar
-        selectedDate={selectedDate}
-        onSelectDate={(d) => setSelectedDate(d)}
-      />
-
-      {/* 4. Movie Grid & Categories */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-16">
-        {/* Movie Cards Section (8 cols) */}
-        <div className="lg:col-span-8 space-y-6">
-          <div className="flex items-center justify-between">
-            <span className="text-xs font-bold uppercase tracking-wider text-red-500">
-              Now Showing in Theatres
-            </span>
-            <Link
-              to="/movies"
-              className="text-xs font-semibold text-red-500 hover:text-red-400 hover:underline"
-            >
-              View All ({nowShowing.length})
-            </Link>
-          </div>
-
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-5">
-            {nowShowing.map((movie) => (
-              <MovieCard key={movie.id} movie={movie} />
-            ))}
-          </div>
+      {/* 2. Main Content Container */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 pb-20">
+        {/* Section Heading: "All movies" */}
+        <div className="mb-4">
+          <h2 className="text-2xl font-bold text-slate-900 tracking-tight">
+            All movies
+          </h2>
         </div>
 
-        {/* Browse by Genre Column (4 cols) */}
-        <div className="lg:col-span-4 space-y-6">
-          <div>
-            <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">
-              Curated Collections
-            </span>
-            <h3 className="text-xl font-bold text-slate-900 mt-0.5">Browse by Genre</h3>
-          </div>
+        {/* Filter Pills Bar matching Screenshot 1 */}
+        <div className="relative mb-8">
+          <div className="flex items-center gap-2.5 overflow-x-auto pb-2 scrollbar-none">
+            {/* Filter Dropdown Toggle Button */}
+            <button
+              onClick={() => setFilterModalOpen(!filterModalOpen)}
+              className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-semibold border transition-all shrink-0 ${
+                filterModalOpen || selectedLanguage || selectedGenre
+                  ? 'bg-slate-900 text-white border-slate-900 shadow-sm'
+                  : 'bg-white text-slate-800 border-slate-300 hover:bg-slate-50'
+              }`}
+            >
+              <SlidersHorizontal className="w-3.5 h-3.5" />
+              <span>Filters</span>
+              <ChevronDown className="w-3.5 h-3.5 ml-0.5" />
+            </button>
 
-          <div className="grid grid-cols-2 gap-3">
-            {genres.map((g) => {
-              const Icon = g.icon;
+            {/* Filter Pills */}
+            {filterPills.map((pill) => {
+              const isActive = activeFilterPill === pill.id;
               return (
-                <Link
-                  key={g.name}
-                  to={`/movies?genre=${g.name}`}
-                  className="p-4 rounded-2xl bg-slate-50 border border-slate-200 hover:border-red-500/60 hover:shadow-md flex flex-col justify-between h-28 transition-all group"
+                <button
+                  key={pill.id}
+                  onClick={() => handlePillClick(pill.id)}
+                  className={`px-3.5 py-1.5 rounded-lg text-xs transition-all shrink-0 border ${
+                    isActive
+                      ? 'bg-slate-900 text-white border-slate-900 font-semibold shadow-sm'
+                      : 'bg-white text-slate-800 border-slate-300 font-normal hover:bg-slate-50'
+                  }`}
                 >
-                  <div className="w-8 h-8 rounded-lg bg-red-50 text-red-500 flex items-center justify-center group-hover:scale-110 group-hover:bg-red-600 group-hover:text-white transition-all">
-                    <Icon className="w-4 h-4" />
-                  </div>
-                  <div>
-                    <h4 className="text-xs font-bold text-slate-800 group-hover:text-red-500 transition-colors">
-                      {g.name}
-                    </h4>
-                    <span className="text-[10px] text-slate-400">{g.count}</span>
-                  </div>
-                </Link>
+                  {pill.label}
+                </button>
               );
             })}
+
+            {/* Clear Filters Button if any filter is active */}
+            {(activeFilterPill || selectedLanguage || selectedGenre) && (
+              <button
+                onClick={() => {
+                  setActiveFilterPill(null);
+                  setSelectedLanguage('');
+                  setSelectedGenre('');
+                }}
+                className="text-xs text-slate-500 hover:text-slate-900 font-medium underline ml-2 shrink-0"
+              >
+                Clear all
+              </button>
+            )}
           </div>
 
-          {/* Special Cinema Experience Promo Card */}
-          <div className="p-5 rounded-2xl bg-gradient-to-br from-red-50 via-white to-white border border-red-200/60 space-y-3">
-            <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase bg-red-600 text-white">
-              Dolby Atmos & IMAX
-            </span>
-            <h4 className="text-sm font-bold text-slate-900 leading-snug">
-              Immerse yourself in 3D Audio and Crystal-Clear 4K Laser Projection
-            </h4>
-            <p className="text-xs text-slate-400">
-              Enjoy luxury recliners, gourmet food delivery at your seat, and seamless mobile check-in.
+          {/* Filters Dropdown Card */}
+          {filterModalOpen && (
+            <div className="absolute left-0 top-12 z-30 w-full max-w-md bg-white border border-slate-200 rounded-2xl shadow-xl p-5 space-y-4">
+              <div className="flex items-center justify-between pb-2 border-b border-slate-100">
+                <span className="font-bold text-sm text-slate-900">Filter By</span>
+                <button
+                  onClick={() => setFilterModalOpen(false)}
+                  className="p-1 rounded-md text-slate-400 hover:text-slate-700"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
+
+              {/* Language selection */}
+              <div>
+                <span className="text-xs font-semibold text-slate-700 block mb-2">Language</span>
+                <div className="flex flex-wrap gap-2">
+                  <button
+                    onClick={() => setSelectedLanguage('')}
+                    className={`px-3 py-1 rounded-lg text-xs border ${
+                      selectedLanguage === ''
+                        ? 'bg-slate-900 text-white border-slate-900 font-medium'
+                        : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50'
+                    }`}
+                  >
+                    All
+                  </button>
+                  {allLanguages.map((lang) => (
+                    <button
+                      key={lang}
+                      onClick={() => setSelectedLanguage(lang === selectedLanguage ? '' : lang)}
+                      className={`px-3 py-1 rounded-lg text-xs border ${
+                        selectedLanguage === lang
+                          ? 'bg-slate-900 text-white border-slate-900 font-medium'
+                          : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50'
+                      }`}
+                    >
+                      {lang}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Genre selection */}
+              <div>
+                <span className="text-xs font-semibold text-slate-700 block mb-2">Genre</span>
+                <div className="flex flex-wrap gap-2">
+                  <button
+                    onClick={() => setSelectedGenre('')}
+                    className={`px-3 py-1 rounded-lg text-xs border ${
+                      selectedGenre === ''
+                        ? 'bg-slate-900 text-white border-slate-900 font-medium'
+                        : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50'
+                    }`}
+                  >
+                    All
+                  </button>
+                  {allGenres.map((g) => (
+                    <button
+                      key={g}
+                      onClick={() => setSelectedGenre(g === selectedGenre ? '' : g)}
+                      className={`px-3 py-1 rounded-lg text-xs border ${
+                        selectedGenre === g
+                          ? 'bg-slate-900 text-white border-slate-900 font-medium'
+                          : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50'
+                      }`}
+                    >
+                      {g}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div className="pt-2 flex items-center justify-between">
+                <button
+                  onClick={() => {
+                    setSelectedLanguage('');
+                    setSelectedGenre('');
+                  }}
+                  className="text-xs text-slate-500 hover:text-slate-900 underline"
+                >
+                  Reset
+                </button>
+                <button
+                  onClick={() => setFilterModalOpen(false)}
+                  className="px-4 py-1.5 rounded-lg bg-slate-900 text-white text-xs font-semibold"
+                >
+                  Apply Filters
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* 3. Movie Grid matching 6-column layout in Screenshot 1 */}
+        {displayedMovies.length === 0 ? (
+          <div className="py-20 text-center bg-slate-50 border border-slate-200 rounded-2xl p-10">
+            <h3 className="text-base font-bold text-slate-800">No movies match this filter</h3>
+            <p className="text-xs text-slate-500 mt-1 max-w-sm mx-auto">
+              Try selecting another language or clear the active filter to view all titles.
             </p>
-          </div>
-        </div>
-      </div>
-
-      {/* 5. For Kids & Family Section */}
-      {kidsMovies.length > 0 && (
-        <div className="mb-16">
-          <div className="flex items-center justify-between mb-6">
-            <div>
-              <span className="text-[10px] font-bold uppercase tracking-wider text-amber-400">
-                Family & Children
-              </span>
-              <h3 className="text-2xl font-black text-slate-900 flex items-center gap-2 mt-0.5">
-                <Baby className="w-6 h-6 text-amber-400" />
-                For Kids & Families
-              </h3>
-            </div>
-            <Link
-              to="/movies?genre=Animation"
-              className="text-xs font-semibold text-amber-400 hover:underline"
+            <button
+              onClick={() => {
+                setActiveFilterPill(null);
+                setSelectedLanguage('');
+                setSelectedGenre('');
+              }}
+              className="mt-4 px-4 py-2 rounded-xl bg-slate-900 text-white text-xs font-semibold shadow-sm"
             >
-              See More Animated
-            </Link>
+              Reset Filters
+            </button>
           </div>
-
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-5">
-            {kidsMovies.map((movie) => (
+        ) : (
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 sm:gap-5">
+            {displayedMovies.map((movie) => (
               <MovieCard key={movie.id} movie={movie} />
             ))}
           </div>
-        </div>
-      )}
-
-      {/* 6. Coming Soon Section */}
-      {comingSoon.length > 0 && (
-        <div className="mb-12">
-          <div className="flex items-center justify-between mb-6">
-            <div>
-              <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">
-                Anticipated Releases
-              </span>
-              <h3 className="text-2xl font-black text-slate-900 flex items-center gap-2 mt-0.5">
-                <Sparkles className="w-6 h-6 text-red-500" />
-                Coming Soon
-              </h3>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-5">
-            {comingSoon.map((movie) => (
-              <MovieCard key={movie.id} movie={movie} />
-            ))}
-          </div>
-        </div>
-      )}
-      </div> {/* end max-w-7xl container */}
+        )}
+      </div>
     </div>
   );
 }

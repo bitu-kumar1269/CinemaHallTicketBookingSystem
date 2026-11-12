@@ -53,7 +53,7 @@ export default function Navbar() {
         <div className="flex items-center gap-6 shrink-0">
           <Link to="/" className="flex items-center gap-2 group">
             <div className="w-9 h-9 rounded-xl bg-slate-900 text-white flex items-center justify-center font-black shadow transition-transform group-hover:scale-105">
-              <Film className="w-5 h-5 text-red-500" />
+              <Film className="w-5 h-5 text-white" />
             </div>
             <div>
               <span className="text-xl font-black tracking-tight text-slate-900">
@@ -71,7 +71,7 @@ export default function Navbar() {
               onClick={() => setCityDropdownOpen(!cityDropdownOpen)}
               className="flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold text-slate-700 hover:bg-slate-100 transition-colors"
             >
-              <MapPin className="w-4 h-4 text-red-500 shrink-0" />
+              <MapPin className="w-4 h-4 text-slate-900 shrink-0" />
               <div className="text-left leading-tight">
                 <span className="block font-bold text-slate-900 text-xs">
                   {selectedCity.split(',')[0]}
@@ -93,7 +93,7 @@ export default function Navbar() {
                       setCityDropdownOpen(false);
                     }}
                     className={`w-full text-left px-4 py-2 text-xs font-medium hover:bg-slate-100 transition-colors ${
-                      selectedCity === city ? 'text-red-500 font-bold' : 'text-slate-700'
+                      selectedCity === city ? 'text-slate-900 font-bold bg-slate-50' : 'text-slate-700'
                     }`}
                   >
                     {city}
@@ -114,7 +114,7 @@ export default function Navbar() {
                 to={tab.path}
                 className={`px-3.5 py-1.5 rounded-full transition-all ${
                   isMovies
-                    ? 'bg-sky-100 text-sky-800 font-bold'
+                    ? 'bg-slate-900 text-white font-bold shadow-sm'
                     : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
                 }`}
               >
@@ -136,7 +136,7 @@ export default function Navbar() {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 onBlur={() => !searchQuery && setSearchOpen(false)}
-                className="w-full bg-slate-100 border border-slate-300 rounded-full py-1.5 pl-8 pr-4 text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:border-red-500"
+                className="w-full bg-slate-100 border border-slate-300 rounded-full py-1.5 pl-8 pr-4 text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:border-slate-900"
               />
               <Search className="w-3.5 h-3.5 text-slate-400 absolute left-3 top-2.5" />
             </form>
@@ -154,9 +154,9 @@ export default function Navbar() {
           {isAdmin && (
             <Link
               to="/admin"
-              className="hidden sm:flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-red-50 text-red-600 border border-red-200 hover:bg-red-100 transition-colors"
+              className="hidden sm:flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-slate-100 text-slate-800 border border-slate-300 hover:bg-slate-200 transition-colors"
             >
-              <ShieldCheck className="w-3.5 h-3.5" />
+              <ShieldCheck className="w-3.5 h-3.5 text-slate-700" />
               Admin
             </Link>
           )}
@@ -166,9 +166,9 @@ export default function Navbar() {
             <Link
               to="/my-bookings"
               title="My Bookings"
-              className="p-2 rounded-full hover:bg-slate-100 text-slate-600 transition-colors"
+              className="p-2 rounded-full hover:bg-slate-100 text-slate-700 transition-colors"
             >
-              <Ticket className="w-4 h-4 text-red-500" />
+              <Ticket className="w-4 h-4 text-slate-900" />
             </Link>
           )}
 
@@ -185,7 +185,7 @@ export default function Navbar() {
               <button
                 onClick={logout}
                 title="Sign Out"
-                className="p-1.5 rounded-lg text-slate-400 hover:text-red-500 text-xs"
+                className="p-1.5 rounded-lg text-slate-400 hover:text-slate-900 text-xs"
               >
                 <LogOut className="w-3.5 h-3.5" />
               </button>
@@ -240,11 +240,11 @@ export default function Navbar() {
           <div className="pt-3 border-t border-slate-200 flex items-center justify-between text-xs">
             <span className="text-slate-500">{selectedCity}</span>
             {isAuthenticated ? (
-              <button onClick={logout} className="text-red-500 font-bold">
+              <button onClick={logout} className="text-slate-900 font-bold">
                 Sign Out
               </button>
             ) : (
-              <Link to="/login" className="text-red-500 font-bold">
+              <Link to="/login" className="text-slate-900 font-bold">
                 Sign In
               </Link>
             )}
