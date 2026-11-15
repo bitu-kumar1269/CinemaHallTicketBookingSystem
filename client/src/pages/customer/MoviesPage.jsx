@@ -58,11 +58,11 @@ export default function MoviesPage() {
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-8">
         <div>
-          <span className="text-[10px] font-bold uppercase tracking-wider text-red-500">
+          <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">
             CineWave Catalog
           </span>
           <h1 className="text-3xl font-black text-slate-900 flex items-center gap-2 mt-0.5">
-            <Film className="w-7 h-7 text-red-600" />
+            <Film className="w-7 h-7 text-slate-900" />
             Explore Movies
           </h1>
           <p className="text-xs text-slate-500 mt-1">
@@ -76,7 +76,7 @@ export default function MoviesPage() {
             placeholder="Search by title, actor, director..."
             value={searchInput}
             onChange={(e) => setSearchInput(e.target.value)}
-            className="w-full bg-white border border-slate-200 rounded-xl py-2.5 pl-10 pr-4 text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 shadow-sm"
+            className="w-full bg-white border border-slate-200 rounded-xl py-2.5 pl-10 pr-4 text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:border-slate-900 focus:ring-1 focus:ring-slate-900 shadow-sm"
           />
           <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-3 pointer-events-none" />
         </form>
@@ -94,11 +94,10 @@ export default function MoviesPage() {
             <button
               key={label}
               onClick={() => handleStatusClick(value)}
-              className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
-                currentStatus === value
-                  ? 'bg-red-600 text-white shadow'
+              className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${currentStatus === value
+                  ? 'bg-slate-900 text-white shadow-sm'
                   : 'bg-slate-100 text-slate-600 hover:text-slate-900 hover:bg-slate-200'
-              }`}
+                }`}
             >
               {label}
             </button>
@@ -116,11 +115,10 @@ export default function MoviesPage() {
               <button
                 key={g}
                 onClick={() => handleGenreClick(g)}
-                className={`px-2.5 py-1 rounded-md text-xs font-medium shrink-0 transition-colors border ${
-                  isSelected
-                    ? 'bg-sky-100 text-sky-700 border-sky-300'
-                    : 'bg-slate-50 text-slate-500 hover:text-slate-800 border-slate-200 hover:border-slate-300'
-                }`}
+                className={`px-2.5 py-1 rounded-md text-xs font-medium shrink-0 transition-colors border ${isSelected
+                    ? 'bg-slate-900 text-white border-slate-900 font-semibold shadow-sm'
+                    : 'bg-slate-50 text-slate-600 hover:text-slate-900 border-slate-200 hover:border-slate-300'
+                  }`}
               >
                 {g}
               </button>
@@ -132,7 +130,7 @@ export default function MoviesPage() {
       {/* Movie Grid */}
       {loading ? (
         <div className="py-20 flex justify-center">
-          <div className="w-10 h-10 border-4 border-red-600 border-t-transparent rounded-full animate-spin" />
+          <div className="w-10 h-10 border-4 border-slate-900 border-t-transparent rounded-full animate-spin" />
         </div>
       ) : movies.length === 0 ? (
         <div className="py-20 text-center bg-white border border-slate-200 rounded-2xl p-10 shadow-sm">
@@ -143,7 +141,7 @@ export default function MoviesPage() {
           </p>
         </div>
       ) : (
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-x-4 gap-y-7">
           {movies.map((movie) => (
             <MovieCard key={movie.id} movie={movie} />
           ))}
