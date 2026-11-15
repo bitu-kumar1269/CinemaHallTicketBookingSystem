@@ -33,12 +33,9 @@ export default function MovieCard({ movie }) {
         </p>
 
         {/* Clean Book now action button */}
-        <button
-          type="button"
-          className="mt-2 w-full py-1.5 px-3 rounded-xl bg-slate-900 group-hover:bg-black text-white text-xs font-semibold shadow-sm active:scale-95 transition-all flex items-center justify-center"
-        >
+        <div className="mt-2 w-full py-1.5 px-3 rounded-xl bg-slate-900 group-hover:bg-black text-white text-xs font-semibold shadow-sm active:scale-95 transition-all flex items-center justify-center">
           Book now
-        </button>
+        </div>
       </div>
     </Link>
   );
