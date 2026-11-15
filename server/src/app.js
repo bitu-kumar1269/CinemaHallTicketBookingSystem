@@ -16,10 +16,31 @@ app.use(
   })
 );
 
+// Configured CORS Origins
+const configuredOrigins = (ENV.CLIENT_URL || '')
+  .split(',')
+  .map((url) => url.trim())
+  .filter(Boolean);
+
+const defaultOrigins = [
+  'http://localhost:5173',
+  'http://127.0.0.1:5173',
+  'http://localhost:5005',
+  'http://localhost',
+];
+
+const allowedOrigins = [...new Set([...configuredOrigins, ...defaultOrigins])];
+
 // CORS configuration
 app.use(
   cors({
-    origin: [ENV.CLIENT_URL, 'http://localhost:5173', 'http://127.0.0.1:5173'],
+    origin: (origin, callback) => {
+      // Allow requests with no origin (e.g., mobile apps, curl, server-to-server)
+      if (!origin || allowedOrigins.includes(origin) || allowedOrigins.includes('*')) {
+        return callback(null, true);
+      }
+      return callback(new Error(`CORS origin not allowed: ${origin}`));
+    },
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
@@ -29,6 +50,17 @@ app.use(
 // Body Parsing
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// Root & Health check routes for Cloud Load Balancers (AWS ALB, GCP, Render, Railway, K8s)
+app.get(['/', '/health', '/api/health'], (req, res) => {
+  res.status(200).json({
+    success: true,
+    status: 'healthy',
+    timestamp: new Date().toISOString(),
+    uptime: process.uptime(),
+    service: 'CineWave Cinema API',
+  });
+});
 
 // Global Rate Limiting
 app.use('/api', apiRateLimiter);

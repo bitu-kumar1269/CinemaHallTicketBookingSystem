@@ -8,8 +8,14 @@ export const SocketProvider = ({ children }) => {
   const [connected, setConnected] = useState(false);
 
   useEffect(() => {
-    // Connect to current origin (Vite proxy forwards /socket.io to port 5005)
-    const newSocket = io({
+    // Dynamic socket endpoint: supports custom VITE_SOCKET_URL, derives from VITE_API_URL, or defaults to current origin
+    const socketUrl =
+      import.meta.env.VITE_SOCKET_URL ||
+      (import.meta.env.VITE_API_URL
+        ? import.meta.env.VITE_API_URL.replace(/\/api\/?$/, '')
+        : undefined);
+
+    const newSocket = io(socketUrl, {
       transports: ['websocket', 'polling'],
       reconnectionAttempts: 5,
     });

@@ -27,5 +27,5 @@ COPY --from=builder /app/server.js ./server.js
 
 EXPOSE 5005
 
-CMD ["node", "server.js"]
+CMD ["npm", "run", "start:prod"]
 

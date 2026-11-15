@@ -4,9 +4,18 @@ import { logger } from '../utils/logger.js';
 let ioInstance = null;
 
 export const initializeSocket = (httpServer, clientUrl) => {
+  const allowedOrigins = clientUrl
+    ? clientUrl.split(',').map((u) => u.trim()).filter(Boolean)
+    : ['*'];
+
   ioInstance = new Server(httpServer, {
     cors: {
-      origin: clientUrl || '*',
+      origin:
+        allowedOrigins.length === 1 && allowedOrigins[0] !== '*'
+          ? allowedOrigins[0]
+          : allowedOrigins.includes('*')
+          ? '*'
+          : allowedOrigins,
       methods: ['GET', 'POST'],
       credentials: true,
     },
